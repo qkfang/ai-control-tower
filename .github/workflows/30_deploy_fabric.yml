@@ -1,0 +1,51 @@
+name: 30 Deploy Fabric
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "fabric/**"
+  workflow_dispatch:
+    inputs:
+      configPath:
+        description: "Path to deployment config JSON"
+        required: false
+        default: "fabric/deployment_package/deployment_config.json"
+      whatIf:
+        description: "Preview only (no changes)"
+        required: false
+        default: "false"
+      skipShortcuts:
+        description: "Skip Lakehouse shortcut creation"
+        required: false
+        default: "false"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure CLI Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Fabric
+        shell: pwsh
+        working-directory: fabric/deployment_package
+        run: |
+          $configPath = "${{ github.event.inputs.configPath }}"
+          if ([string]::IsNullOrWhiteSpace($configPath)) { $configPath = "deployment_config.json" }
+          else { $configPath = $configPath -replace '^fabric/deployment_package/', '' }
+
+          $params = @{ ConfigPath = $configPath }
+          if ("${{ github.event.inputs.whatIf }}" -eq "true") { $params.WhatIf = $true }
+          if ("${{ github.event.inputs.skipShortcuts }}" -eq "true") { $params.SkipShortcuts = $true }
+
+          ./deploy_to_fabric.ps1 @params
