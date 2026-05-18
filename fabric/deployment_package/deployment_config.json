@@ -1,0 +1,89 @@
+{
+  "title": "AI Control Tower - Deployment Configuration",
+  "description": "Configuration for deploying the AI Control Tower solution to a new Fabric workspace. Only fields read by deploy_to_fabric.ps1 are listed.",
+
+  "sourceWorkspace": {
+    "name": "AI_Control_Tower",
+    "id": "474ec927-5522-4cf6-b077-315d80fe0ac3"
+  },
+
+  "targetEnvironment": {
+    "workspace": {
+      "name": "<<TARGET_WORKSPACE_NAME>>",
+      "capacityId": "<<FABRIC_CAPACITY_ID>>",
+      "description": "AI Control Tower for Foundry Agent monitoring"
+    },
+
+    "storageShortcuts": {
+      "connectionType": "AzureBlobStorage",
+      "storageAccountUrl": "https://<<STORAGE_ACCOUNT_NAME>>.blob.core.windows.net",
+      "connectionId": "<<FABRIC_CLOUD_CONNECTION_ID>>",
+      "containers": [
+        { "name": "am-azuremetrics",            "targetPath": "/Files/Foundry_Control_Tower", "sourceSubpath": "/am-azuremetrics" },
+        { "name": "am-appservicehttplogs",      "targetPath": "/Files/Foundry_Control_Tower", "sourceSubpath": "/am-appservicehttplogs" },
+        { "name": "am-appserviceconsolelogs",   "targetPath": "/Files/Foundry_Control_Tower", "sourceSubpath": "/am-appserviceconsolelogs" },
+        { "name": "am-apprequests",             "targetPath": "/Files/Foundry_Control_Tower", "sourceSubpath": "/am-apprequests" },
+        { "name": "am-appperformancecounters",  "targetPath": "/Files/Foundry_Control_Tower", "sourceSubpath": "/am-appperformancecounters" },
+        { "name": "am-appmetrics",              "targetPath": "/Files/Foundry_Control_Tower", "sourceSubpath": "/am-appmetrics" },
+        { "name": "am-appexceptions",           "targetPath": "/Files/Foundry_Control_Tower", "sourceSubpath": "/am-appexceptions" },
+        { "name": "am-appdependencies",         "targetPath": "/Files/Foundry_Control_Tower", "sourceSubpath": "/am-appdependencies" }
+      ]
+    },
+
+    "kustoDataSources": {
+      "applicationInsights": {
+        "name": "<<APP_INSIGHTS_NAME>>",
+        "clusterUri": "https://ade.applicationinsights.io/subscriptions/<<TARGET_SUBSCRIPTION_ID>>/resourcegroups/<<TARGET_RESOURCE_GROUP>>/providers/microsoft.insights/components/<<APP_INSIGHTS_NAME>>"
+      },
+      "logAnalytics": {
+        "name": "<<LOG_ANALYTICS_WORKSPACE_NAME>>",
+        "clusterUri": "https://ade.loganalytics.io/subscriptions/<<TARGET_SUBSCRIPTION_ID>>/resourcegroups/<<TARGET_RESOURCE_GROUP>>/providers/microsoft.operationalinsights/workspaces/<<LOG_ANALYTICS_WORKSPACE_NAME>>"
+      }
+    },
+
+    "notebookConfig": {
+      "onelakeBasePath": "abfss://<<TARGET_WORKSPACE_NAME>>@onelake.dfs.fabric.microsoft.com/AI_Foundry_Control_Tower.Lakehouse/Files/Foundry_Control_Tower/am-appdependencies",
+      "workspaceResourceId": "WorkspaceResourceId=/subscriptions/<<TARGET_SUBSCRIPTION_ID>>/resourcegroups/<<TARGET_RESOURCE_GROUP>>/providers/microsoft.operationalinsights/workspaces/<<LOG_ANALYTICS_WORKSPACE_NAME>>"
+    }
+  },
+
+  "items": {
+    "lakehouse": {
+      "displayName": "AI_Foundry_Control_Tower",
+      "description": "Lakehouse for Foundry Agent telemetry data",
+      "enableSchemas": true
+    },
+    "notebook": {
+      "displayName": "FoundryAgent_FactTable_ETL",
+      "description": "ETL notebook to create the foundryagent_fact Delta table",
+      "definitionFolder": "Notebook/FoundryAgent_FactTable_ETL",
+      "sourceIpynbPath": "../docs/notebooks/FoundryAgent_FactTable_ETL.ipynb"
+    },
+    "kqlQueryset": {
+      "displayName": "Log_Analytics_KustoQueryWorkbench",
+      "description": "KQL queries for monitoring and exploration",
+      "definitionFolder": "KQLQueryset/Log_Analytics_KustoQueryWorkbench"
+    },
+    "kqlDashboard": {
+      "displayName": "LA_Dashaboard",
+      "description": "Real-time KQL dashboard",
+      "definitionFolder": "KQLDashboard/LA_Dashaboard"
+    },
+    "semanticModel": {
+      "displayName": "AI_Control_Tower",
+      "description": "Semantic model for Power BI reporting",
+      "definitionFolder": "SemanticModel/AI_Control_Tower"
+    },
+    "report": {
+      "displayName": "AI_ControlTower_Report",
+      "description": "Power BI report for AI Control Tower dashboard",
+      "definitionFolder": "Report/AI_ControlTower_Report"
+    }
+  },
+
+  "postDeploymentSteps": [
+    "1. Run the ETL notebook to populate the foundryagent_fact Delta table (notebook is already bound to the lakehouse).",
+    "2. Add the foundryagent_fact table to the AI_Control_Tower semantic model (DirectLake).",
+    "3. Open the AI_ControlTower_Report and refresh visuals (binding to the new semantic model is automatic)."
+  ]
+}
