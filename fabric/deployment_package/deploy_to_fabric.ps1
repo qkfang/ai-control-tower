@@ -351,6 +351,26 @@ else {
 Write-Host ""
 Write-Host "--- Step 3: Lakehouse Shortcuts ---"
 
+# If earlier steps were skipped/commented, resolve workspaceId and lakehouseId
+# by name so the shortcuts API URL is well-formed.
+if (-not $workspaceId) {
+    Write-Host "  Resolving workspace by name: $($target.workspace.name)"
+    $wsList = Invoke-FabricJson -Uri "$FabricBaseUri/workspaces" -Headers $headers
+    $wsMatch = $wsList.value | Where-Object { $_.displayName -eq $target.workspace.name }
+    if (-not $wsMatch) { throw "Workspace '$($target.workspace.name)' not found." }
+    $workspaceId = $wsMatch.id
+    Write-Host "  Found workspace ID: $workspaceId" -ForegroundColor Yellow
+}
+if (-not $lakehouseId) {
+    $lhName = $config.items.lakehouse.displayName
+    Write-Host "  Resolving lakehouse by name: $lhName"
+    $lhList = Invoke-FabricJson -Uri "$FabricBaseUri/workspaces/$workspaceId/lakehouses" -Headers $headers
+    $lhMatch = $lhList.value | Where-Object { $_.displayName -eq $lhName }
+    if (-not $lhMatch) { throw "Lakehouse '$lhName' not found in workspace $workspaceId." }
+    $lakehouseId = $lhMatch.id
+    Write-Host "  Found lakehouse ID: $lakehouseId" -ForegroundColor Yellow
+}
+
 $shortcuts = $target.storageShortcuts
 if ($SkipShortcuts) {
     Write-Host "  Skipping shortcuts (per -SkipShortcuts)" -ForegroundColor Yellow
@@ -364,18 +384,33 @@ elseif ($WhatIf) {
 }
 else {
     $shortcutUri = "$FabricBaseUri/workspaces/$workspaceId/items/$lakehouseId/shortcuts"
+    # Map config connectionType to the Fabric API target property name.
+    # The Fabric shortcuts API expects the target object to contain exactly
+    # one connector-named property (no 'type' field).
+    $targetKeyMap = @{
+        'AzureDataLakeStorageGen2' = 'adlsGen2'
+        'AzureBlobStorage'         = 'azureBlobStorage'
+        'AmazonS3'                 = 'amazonS3'
+        'GoogleCloudStorage'       = 'googleCloudStorage'
+        'S3Compatible'             = 's3Compatible'
+        'Dataverse'                = 'dataverse'
+        'OneLake'                  = 'oneLake'
+    }
+    $targetKey = $targetKeyMap[$shortcuts.connectionType]
+    if (-not $targetKey) { $targetKey = $shortcuts.connectionType }
+
     foreach ($sc in $shortcuts.containers) {
+        $targetInner = @{
+            connectionId = $shortcuts.connectionId
+            location     = $shortcuts.storageAccountUrl
+            subpath      = $sc.sourceSubpath
+        }
+        $shortcutTarget = @{}
+        $shortcutTarget[$targetKey] = $targetInner
         $body = @{
             name   = $sc.name
             path   = $sc.targetPath
-            target = @{
-                type             = 'AzureBlobStorage'
-                azureBlobStorage = @{
-                    connectionId = $shortcuts.connectionId
-                    location     = $shortcuts.storageAccountUrl
-                    subpath      = $sc.sourceSubpath
-                }
-            }
+            target = $shortcutTarget
         }
         try {
             Invoke-FabricLro -Uri $shortcutUri -Method 'POST' -Body $body -Headers $headers | Out-Null

@@ -21,30 +21,30 @@ var fabricCapacityName = '${baseName}fabric'
   
 
 // ── Storage Account ──────────────────────────────────────────────────────────
+// resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
+//   name: storageAccountName
+//   location: location
+//   tags: commonTags
+//   sku: {
+//     name: 'Standard_LRS'
+//   }
+//   kind: 'StorageV2'
+//   properties: {
+//     accessTier: 'Hot'
+//     supportsHttpsTrafficOnly: true
+//     minimumTlsVersion: 'TLS1_2'
+//     allowBlobPublicAccess: true // poc only
+//     publicNetworkAccess: 'Enabled' // poc only
+//     networkAcls: {
+//       bypass: 'AzureServices'
+//       defaultAction: 'Allow'
+//     }
+//   }
+// }
+
+// ── Storage Account (ADLS Gen2 / HNS enabled) ──────────────────────────────
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: storageAccountName
-  location: location
-  tags: commonTags
-  sku: {
-    name: 'Standard_LRS'
-  }
-  kind: 'StorageV2'
-  properties: {
-    accessTier: 'Hot'
-    supportsHttpsTrafficOnly: true
-    minimumTlsVersion: 'TLS1_2'
-    allowBlobPublicAccess: true // poc only
-    publicNetworkAccess: 'Enabled' // poc only
-    networkAcls: {
-      bypass: 'AzureServices'
-      defaultAction: 'Allow'
-    }
-  }
-}
-
-// ── Storage Account B (ADLS Gen2 / HNS enabled) ──────────────────────────────
-resource storageAccountB 'Microsoft.Storage/storageAccounts@2023-05-01' = {
-  name: storageAccountBName
   location: location
   tags: commonTags
   sku: {
@@ -317,15 +317,15 @@ resource userStorageBlobRole 'Microsoft.Authorization/roleAssignments@2022-04-01
   }
 }]
 
-resource userStorageBlobRoleB 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for principal in principals: {
-  name: guid(storageAccountB.id, principal.id, storageBlobDataContributorRoleId)
-  scope: storageAccountB
-  properties: {
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', storageBlobDataContributorRoleId)
-    principalId: principal.id
-    principalType: principal.principalType
-  }
-}]
+// resource userStorageBlobRoleB 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for principal in principals: {
+//   name: guid(storageAccountB.id, principal.id, storageBlobDataContributorRoleId)
+//   scope: storageAccountB
+//   properties: {
+//     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', storageBlobDataContributorRoleId)
+//     principalId: principal.id
+//     principalType: principal.principalType
+//   }
+// }]
 
 
 

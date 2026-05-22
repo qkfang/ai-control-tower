@@ -303,16 +303,16 @@
     {
       "kind": "manual-kusto",
       "id": "59a97410-d842-422c-99b9-9879fa4e26a9",
-      "name": "https://ade.loganalytics.io/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-agentctt/providers/microsoft.operationalinsights/workspaces/agentctt-law",
-      "clusterUri": "https://ade.loganalytics.io/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-agentctt/providers/microsoft.operationalinsights/workspaces/agentctt-law",
-      "database": "agentctt-law"
+      "name": "https://ade.loganalytics.io/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-aictt/providers/microsoft.operationalinsights/workspaces/aictt-law",
+      "clusterUri": "https://ade.loganalytics.io/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-aictt/providers/microsoft.operationalinsights/workspaces/aictt-law",
+      "database": "aictt-law"
     },
     {
       "kind": "manual-kusto",
       "id": "fa5c3f20-c7e3-485b-ae97-b81b0c817877",
-      "name": "https://ade.applicationinsights.io/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-agentctt/providers/microsoft.insights/components/agentctt-ai",
-      "clusterUri": "https://ade.applicationinsights.io/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-agentctt/providers/microsoft.insights/components/agentctt-ai",
-      "database": "agentctt-ai"
+      "name": "https://ade.applicationinsights.io/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-aictt/providers/microsoft.insights/components/aictt-ai",
+      "clusterUri": "https://ade.applicationinsights.io/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-aictt/providers/microsoft.insights/components/aictt-ai",
+      "database": "aictt-ai"
     }
   ],
   "pages": [
