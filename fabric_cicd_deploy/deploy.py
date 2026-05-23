@@ -17,6 +17,7 @@ import os
 import sys
 from pathlib import Path
 
+from dotenv import load_dotenv
 from azure.identity import AzureCliCredential
 from fabric_cicd import (
     FabricWorkspace,
@@ -24,6 +25,8 @@ from fabric_cicd import (
     publish_all_items,
     unpublish_all_orphan_items,
 )
+
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
 # Item types present under ../fabric_cicd
 ITEM_TYPES_IN_SCOPE = [

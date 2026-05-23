@@ -20,8 +20,9 @@ find_replace:
       item_type: "Notebook"
 
     # Source workspace display name baked into the OneLake abfss URI.
-    # Replace with the target workspace display name.
+    # Replace with the target workspace display name (hardcoded — fabric-cicd
+    # v1.0.0 does not support the $workspace.$name dynamic variable).
     - find_value: "AI_Control_Tower_v2"
       replace_value:
-          _ALL_: "$workspace.$name"
+          _ALL_: "AI_Control_Tower_v2"
       item_type: "Notebook"

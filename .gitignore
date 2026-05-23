@@ -45,3 +45,7 @@ dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log
+fabric_cicd_deploy/fabric_cicd.error.log
