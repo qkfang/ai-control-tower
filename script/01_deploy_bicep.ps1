@@ -1,11 +1,12 @@
 
-az group create --name 'rg-agentctt' --location 'australiaeast'
+$rgName = 'rg-aictt'
+$location = 'australiaeast'
 
-az deployment group create --name 'agentctt-dev' --resource-group 'rg-agentctt' --template-file './main.bicep' --parameters './main.bicepparam'
+$rgExists = az group exists --name $rgName
+if ($rgExists -eq 'false') {
+    Write-Host "Resource group '$rgName' does not exist. Creating..."
+    az group create --name $rgName --location $location
+}
 
-
-
-az group create --name 'rg-aictt' --location 'australiaeast'
-
-az deployment group create --name 'aictt-dev' --resource-group 'rg-aictt' --template-file './main.bicep' --parameters './main.bicepparam'
+az deployment group create --name 'aictt-dev' --resource-group $rgName --template-file '../bicep/main.bicep' --parameters '../bicep/main.bicepparam'
 

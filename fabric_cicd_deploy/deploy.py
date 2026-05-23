@@ -21,6 +21,7 @@ from dotenv import load_dotenv
 from azure.identity import AzureCliCredential
 from fabric_cicd import (
     FabricWorkspace,
+    append_feature_flag,
     change_log_level,
     publish_all_items,
     unpublish_all_orphan_items,
@@ -53,6 +54,9 @@ def main() -> int:
 
     if os.environ.get("FABRIC_DEBUG", "false").lower() == "true":
         change_log_level("DEBUG")
+
+    # Lakehouse shortcuts (shortcuts.metadata.json) are not deployed by default.
+    append_feature_flag("enable_shortcut_publish")
 
     print(f"workspace_id : {workspace_id}")
     print(f"environment  : {environment}")
