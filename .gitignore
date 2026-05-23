@@ -26,6 +26,10 @@ project.nuget.cache
 
 # Publish output
 publish/
+**/publish/
+publish.zip
+**/publish.zip
+publish*.zip
 out/
 
 # ASP.NET Scaffolding

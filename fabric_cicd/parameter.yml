@@ -1,0 +1,27 @@
+# parameter.yml for fabric-cicd
+# https://microsoft.github.io/fabric-cicd/latest/how_to/parameterization/
+#
+# The "environment" key passed to FabricWorkspace selects which replacement
+# value is used. _ALL_ applies to every environment.
+
+find_replace:
+    # Source lakehouse GUID embedded in the notebook metadata.
+    # Replace with the deployed lakehouse id in the target workspace.
+    - find_value: "3169a0db-1de9-41e3-804c-9b0e6aaf505e"
+      replace_value:
+          _ALL_: "$items.Lakehouse.AI_Foundry_Control_Tower.$id"
+      item_type: "Notebook"
+
+    # Source workspace GUID embedded in the notebook metadata.
+    # Replace with the target workspace id.
+    - find_value: "187645de-b325-455e-85ca-08f47beac19e"
+      replace_value:
+          _ALL_: "$workspace.$id"
+      item_type: "Notebook"
+
+    # Source workspace display name baked into the OneLake abfss URI.
+    # Replace with the target workspace display name.
+    - find_value: "AI_Control_Tower_v2"
+      replace_value:
+          _ALL_: "$workspace.$name"
+      item_type: "Notebook"

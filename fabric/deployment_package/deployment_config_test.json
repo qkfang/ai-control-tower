@@ -2,22 +2,17 @@
   "title": "AI Control Tower - Deployment Configuration",
   "description": "Configuration for deploying the AI Control Tower solution to a new Fabric workspace. Only fields read by deploy_to_fabric.ps1 are listed.",
 
-  "sourceWorkspace": {
-    "name": "AI_Control_Tower",
-    "id": "474ec927-5522-4cf6-b077-315d80fe0ac3"
-  },
-
   "targetEnvironment": {
     "workspace": {
-      "name": "<<TARGET_WORKSPACE_NAME>>",
-      "capacityId": "<<FABRIC_CAPACITY_ID>>",
+      "name": "AI_Control_Tower_v2",
+      "capacityId": "74bb3465-bd62-4f9f-a0d4-b287543e450a",
       "description": "AI Control Tower for Foundry Agent monitoring"
     },
 
     "storageShortcuts": {
-      "connectionType": "AzureBlobStorage",
-      "storageAccountUrl": "https://<<STORAGE_ACCOUNT_NAME>>.blob.core.windows.net",
-      "connectionId": "<<FABRIC_CLOUD_CONNECTION_ID>>",
+      "connectionType": "AzureDataLakeStorageGen2",
+      "storageAccountUrl": "https://aicttsa.dfs.core.windows.net",
+      "connectionId": "9a59d63e-fb44-4338-9fcf-da6b0569ace4",
       "containers": [
         { "name": "am-azuremetrics",            "targetPath": "/Files/Foundry_Control_Tower", "sourceSubpath": "/am-azuremetrics" },
         { "name": "am-appservicehttplogs",      "targetPath": "/Files/Foundry_Control_Tower", "sourceSubpath": "/am-appservicehttplogs" },
@@ -32,18 +27,18 @@
 
     "kustoDataSources": {
       "applicationInsights": {
-        "name": "<<APP_INSIGHTS_NAME>>",
-        "clusterUri": "https://ade.applicationinsights.io/subscriptions/<<TARGET_SUBSCRIPTION_ID>>/resourcegroups/<<TARGET_RESOURCE_GROUP>>/providers/microsoft.insights/components/<<APP_INSIGHTS_NAME>>"
+        "name": "aictt-ai",
+        "clusterUri": "https://ade.applicationinsights.io/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-aictt/providers/microsoft.insights/components/aictt-ai"
       },
       "logAnalytics": {
-        "name": "<<LOG_ANALYTICS_WORKSPACE_NAME>>",
-        "clusterUri": "https://ade.loganalytics.io/subscriptions/<<TARGET_SUBSCRIPTION_ID>>/resourcegroups/<<TARGET_RESOURCE_GROUP>>/providers/microsoft.operationalinsights/workspaces/<<LOG_ANALYTICS_WORKSPACE_NAME>>"
+        "name": "aictt-law",
+        "clusterUri": "https://ade.loganalytics.io/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-aictt/providers/microsoft.operationalinsights/workspaces/aictt-law"
       }
     },
 
     "notebookConfig": {
-      "onelakeBasePath": "abfss://<<TARGET_WORKSPACE_NAME>>@onelake.dfs.fabric.microsoft.com/AI_Foundry_Control_Tower.Lakehouse/Files/Foundry_Control_Tower/am-appdependencies",
-      "workspaceResourceId": "WorkspaceResourceId=/subscriptions/<<TARGET_SUBSCRIPTION_ID>>/resourcegroups/<<TARGET_RESOURCE_GROUP>>/providers/microsoft.operationalinsights/workspaces/<<LOG_ANALYTICS_WORKSPACE_NAME>>"
+      "onelakeBasePath": "abfss://AI_Control_Tower_v2@onelake.dfs.fabric.microsoft.com/AI_Foundry_Control_Tower.Lakehouse/Files/Foundry_Control_Tower/am-appdependencies",
+      "workspaceResourceId": "WorkspaceResourceId=/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-aictt/providers/microsoft.operationalinsights/workspaces/aictt-law"
     }
   },
 
