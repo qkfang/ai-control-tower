@@ -6,7 +6,7 @@
       "type": "AdlsGen2",
       "adlsGen2": {
         "connectionId": "9a59d63e-fb44-4338-9fcf-da6b0569ace4",
-        "location": "https://aicttsa.dfs.core.windows.net",
+        "location": "https://aicttsadev.dfs.core.windows.net",
         "subpath": "/am-azuremetrics"
       }
     }
@@ -18,7 +18,7 @@
       "type": "AdlsGen2",
       "adlsGen2": {
         "connectionId": "9a59d63e-fb44-4338-9fcf-da6b0569ace4",
-        "location": "https://aicttsa.dfs.core.windows.net",
+        "location": "https://aicttsadev.dfs.core.windows.net",
         "subpath": "/am-appservicehttplogs"
       }
     }
@@ -30,7 +30,7 @@
       "type": "AdlsGen2",
       "adlsGen2": {
         "connectionId": "9a59d63e-fb44-4338-9fcf-da6b0569ace4",
-        "location": "https://aicttsa.dfs.core.windows.net",
+        "location": "https://aicttsadev.dfs.core.windows.net",
         "subpath": "/am-appserviceconsolelogs"
       }
     }
@@ -42,7 +42,7 @@
       "type": "AdlsGen2",
       "adlsGen2": {
         "connectionId": "9a59d63e-fb44-4338-9fcf-da6b0569ace4",
-        "location": "https://aicttsa.dfs.core.windows.net",
+        "location": "https://aicttsadev.dfs.core.windows.net",
         "subpath": "/am-apprequests"
       }
     }
@@ -54,7 +54,7 @@
       "type": "AdlsGen2",
       "adlsGen2": {
         "connectionId": "9a59d63e-fb44-4338-9fcf-da6b0569ace4",
-        "location": "https://aicttsa.dfs.core.windows.net",
+        "location": "https://aicttsadev.dfs.core.windows.net",
         "subpath": "/am-appperformancecounters"
       }
     }
@@ -66,7 +66,7 @@
       "type": "AdlsGen2",
       "adlsGen2": {
         "connectionId": "9a59d63e-fb44-4338-9fcf-da6b0569ace4",
-        "location": "https://aicttsa.dfs.core.windows.net",
+        "location": "https://aicttsadev.dfs.core.windows.net",
         "subpath": "/am-appmetrics"
       }
     }
@@ -78,7 +78,7 @@
       "type": "AdlsGen2",
       "adlsGen2": {
         "connectionId": "9a59d63e-fb44-4338-9fcf-da6b0569ace4",
-        "location": "https://aicttsa.dfs.core.windows.net",
+        "location": "https://aicttsadev.dfs.core.windows.net",
         "subpath": "/am-appexceptions"
       }
     }
@@ -90,7 +90,7 @@
       "type": "AdlsGen2",
       "adlsGen2": {
         "connectionId": "9a59d63e-fb44-4338-9fcf-da6b0569ace4",
-        "location": "https://aicttsa.dfs.core.windows.net",
+        "location": "https://aicttsadev.dfs.core.windows.net",
         "subpath": "/am-appdependencies"
       }
     }

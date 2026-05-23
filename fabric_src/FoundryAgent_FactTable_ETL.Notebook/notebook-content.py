@@ -59,7 +59,7 @@
 ONELAKE_BASE_PATH = "abfss://AI_Control_Tower_v2@onelake.dfs.fabric.microsoft.com/AI_Foundry_Control_Tower.Lakehouse/Files/Foundry_Control_Tower/am-appdependencies"
 
 # Log Analytics workspace resource path (subfolder within the above path)
-WORKSPACE_RESOURCE_ID = "WorkspaceResourceId=/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-aictt/providers/microsoft.operationalinsights/workspaces/aictt-law"
+WORKSPACE_RESOURCE_ID = "WorkspaceResourceId=/subscriptions/873a4995-e21b-47e2-953e-f2e88e2fa4f9/resourcegroups/rg-aictt-dev/providers/microsoft.operationalinsights/workspaces/aictt-law-dev"
 
 # Target Delta table name
 TARGET_TABLE = "foundryagent_fact"
