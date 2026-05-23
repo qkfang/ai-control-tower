@@ -7,4 +7,4 @@
 - never include any business name or application name from customer
 - make sure remove any sensitive information in mock data
 - any powershell script file should always have inline varaibles, hardcode, dont pass in as vars
-
+- fabric cicd deploy should follow https://microsoft.github.io/fabric-cicd/ this repo
