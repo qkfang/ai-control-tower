@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Lakehouse",
+    "displayName": "AI_Foundry_Control_Tower",
+    "description": "Lakehouse for Foundry Agent telemetry data"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6aaf505e-9b0e-804c-41e3-1de93169a0db"
+  }
+}

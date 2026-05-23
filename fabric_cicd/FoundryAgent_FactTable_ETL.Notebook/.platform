@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "FoundryAgent_FactTable_ETL",
+    "description": "ETL notebook to create the foundryagent_fact Delta table"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ed1a0f6d-a4b8-9ae6-4ae1-1149fa2b4f45"
+  }
+}
