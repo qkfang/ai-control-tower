@@ -27,7 +27,16 @@ from fabric_cicd import (
     unpublish_all_orphan_items,
 )
 
-load_dotenv(Path(__file__).resolve().parent / ".env")
+# Load base .env, then overlay .env.<environment> (lowercased) if present.
+# The per-environment file takes precedence so the same parameter.yml can be
+# reused across DEV / PPE / PROD by only swapping .env files.
+_env_dir = Path(__file__).resolve().parent
+load_dotenv(_env_dir / ".env")
+_env_name = os.environ.get("FABRIC_ENVIRONMENT", "DEV").lower()
+_env_overlay = _env_dir / f".env.{_env_name}"
+if _env_overlay.exists():
+    load_dotenv(_env_overlay, override=True)
+    print(f"loaded overlay: {_env_overlay.name}")
 
 # Item types present under ../fabric_cicd
 ITEM_TYPES_IN_SCOPE = [
