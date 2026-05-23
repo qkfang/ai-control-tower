@@ -11,7 +11,7 @@ the telemetry into a Power BI report.
 ```
  ┌────────────────────────┐      ┌──────────────────────────┐
  │  Browser UI            │ HTTP │  App Service (Linux)     │
- │  wwwroot/index.html    │─────▶│  agentct (.NET 10)       │
+ │  wwwroot/index.html    │─────▶│  aictt_app (.NET 10)     │
  └────────────────────────┘      │   /support  /doc         │
                                  │   /customer  /health     │
                                  └─────────────┬────────────┘
@@ -41,30 +41,30 @@ the telemetry into a Power BI report.
 
 | Path | Purpose |
 | --- | --- |
-| [src/agentct](src/agentct) | .NET 10 minimal API hosting the agents and the static UI. |
-| [src/agentct/Agents](src/agentct/Agents) | `BaseAgent` plus three Foundry agents: support, doc, customer. |
-| [src/agentct/wwwroot/index.html](src/agentct/wwwroot/index.html) | Single-page UI with manual prompt and a built-in traffic simulator. |
+| [src/aictt_app](src/aictt_app) | .NET 10 minimal API hosting the agents and the static UI. |
+| [src/aictt_app/Agents](src/aictt_app/Agents) | `BaseAgent` plus three Foundry agents: support, doc, customer. |
+| [src/aictt_app/wwwroot/index.html](src/aictt_app/wwwroot/index.html) | Single-page UI with manual prompt and a built-in traffic simulator. |
 | [bicep](bicep) | Infrastructure-as-code for App Service, Foundry, monitoring, Fabric capacity and RBAC. |
 | [fabric/deployment_package](fabric/deployment_package) | Script-driven Fabric workspace deployment (REST API based). |
 | [fabric/templates](fabric/templates) | Reusable Fabric item templates (Lakehouse, Notebook, Report, etc.). |
 
-## Web app (`src/agentct`)
+## Web app (`src/aictt_app`)
 
-- Minimal API in [Program.cs](src/agentct/Program.cs) wires
+- Minimal API in [Program.cs](src/aictt_app/Program.cs) wires
   `AIProjectClient` with `DefaultAzureCredential` and exposes one
   endpoint per agent.
-- [BaseAgent.cs](src/agentct/Agents/BaseAgent.cs) creates a Foundry
+- [BaseAgent.cs](src/aictt_app/Agents/BaseAgent.cs) creates a Foundry
   agent version from a declarative definition and drives the
   Responses API, including auto-approval of MCP tool calls.
 - The three concrete agents only differ by their instructions:
-  - [CtAgSupport](src/agentct/Agents/CtAgSupport.cs) — troubleshooting and escalation.
-  - [CtAgDoc](src/agentct/Agents/CtAgDoc.cs) — documentation and knowledge base.
-  - [CtAgCustomer](src/agentct/Agents/CtAgCustomer.cs) — account and service questions.
+  - [CtAgSupport](src/aictt_app/Agents/CtAgSupport.cs) — troubleshooting and escalation.
+  - [CtAgDoc](src/aictt_app/Agents/CtAgDoc.cs) — documentation and knowledge base.
+  - [CtAgCustomer](src/aictt_app/Agents/CtAgCustomer.cs) — account and service questions.
 - Telemetry is shipped to Application Insights through
   `Azure.Monitor.OpenTelemetry.AspNetCore`; Live Metrics traffic is
   filtered out to avoid self-tracking noise.
 
-Configuration is supplied via [appsettings.json](src/agentct/appsettings.json)
+Configuration is supplied via [appsettings.json](src/aictt_app/appsettings.json)
 or App Service app settings:
 
 | Setting | Description |
@@ -77,7 +77,7 @@ or App Service app settings:
 Run locally:
 
 ```powershell
-cd src/agentct
+cd src/aictt_app
 dotnet run
 ```
 

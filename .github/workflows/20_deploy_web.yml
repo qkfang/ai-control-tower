@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "src/agentct/**"
+      - "src/aictt_app/**"
   workflow_dispatch:
 
 permissions:
@@ -24,13 +24,13 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore src/agentct/agentct.csproj
+        run: dotnet restore src/aictt_app/aictt_app.csproj
 
       - name: Build
-        run: dotnet build src/agentct/agentct.csproj --configuration Release --no-restore
+        run: dotnet build src/aictt_app/aictt_app.csproj --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish src/agentct/agentct.csproj --configuration Release --output ./publish
+        run: dotnet publish src/aictt_app/aictt_app.csproj --configuration Release --output ./publish
 
       - name: Azure CLI Login
         uses: azure/login@v1

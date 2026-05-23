@@ -234,7 +234,7 @@ module webApp 'webapp.bicep' = if (deployWebApp) {
       AZURE_AI_MODEL_DEPLOYMENT_NAME: deployFoundry ? azureFoundry!.outputs.deploymentName : ''
       AZURE_TENANT_ID: tenant().tenantId
     }
-    appCommandLine: 'dotnet agentct.dll'
+    appCommandLine: 'dotnet aictt_app.dll'
   }
 }
 
