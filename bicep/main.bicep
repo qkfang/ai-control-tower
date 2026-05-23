@@ -1,6 +1,14 @@
 @description('Base name prefix for all resources')
 param baseName string = 'agentct'
 
+@description('Environment short name (e.g. dev, test, prod) used in resource names')
+@allowed([
+  'dev'
+  'test'
+  'prod'
+])
+param environment string = 'dev'
+
 @description('Azure region for all resources')
 param location string = 'australiaeast'
 
@@ -17,16 +25,16 @@ param deployWebApp bool = true
 param deployFoundry bool = true
 
 var commonTags = {
-  
+  environment: environment
 }
-var foundryName = '${baseName}-foundry'
-var storageAccountName = replace('${baseName}sa', '-', '')
-var storageAccountBName = replace('${baseName}sab', '-', '')
-var logAnalyticsName = '${baseName}-law'
-var appInsightsName = '${baseName}-ai'
-var appServicePlanName = '${baseName}-asp'
-var webAppName = '${baseName}-web'
-var fabricCapacityName = '${baseName}fabric'
+var foundryName = '${baseName}-foundry-${environment}'
+var storageAccountName = replace('${baseName}sa${environment}', '-', '')
+var storageAccountBName = replace('${baseName}sab${environment}', '-', '')
+var logAnalyticsName = '${baseName}-law-${environment}'
+var appInsightsName = '${baseName}-ai-${environment}'
+var appServicePlanName = '${baseName}-asp-${environment}'
+var webAppName = '${baseName}-web-${environment}'
+var fabricCapacityName = replace('${baseName}fabric${environment}', '-', '')
   
 
 // ── Storage Account ──────────────────────────────────────────────────────────

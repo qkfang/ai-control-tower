@@ -39,6 +39,16 @@ ITEM_TYPES_IN_SCOPE = [
     "Report",
 ]
 
+# Env vars referenced from parameter.yml as $ENV:NAME. fabric-cicd v1.0.0 only
+# picks up OS env vars whose names literally start with "$ENV:", so deploy.py
+# re-exports these under that prefixed name at runtime.
+PARAMETERIZED_ENV_VARS = [
+    "FABRIC_RESOURCE_GROUP",
+    "FABRIC_SUBSCRIPTION_ID",
+    "FABRIC_LAW_NAME",
+    "FABRIC_AI_NAME",
+]
+
 
 def main() -> int:
     workspace_id = os.environ.get("FABRIC_WORKSPACE_ID")
@@ -57,6 +67,15 @@ def main() -> int:
 
     # Lakehouse shortcuts (shortcuts.metadata.json) are not deployed by default.
     append_feature_flag("enable_shortcut_publish")
+
+    # Allow parameter.yml replace_value entries to reference env vars via $ENV:NAME.
+    # fabric-cicd looks up OS env vars whose names literally start with "$ENV:",
+    # so re-export each PARAMETERIZED_ENV_VARS value under that prefixed name.
+    append_feature_flag("enable_environment_variable_replacement")
+    for name in PARAMETERIZED_ENV_VARS:
+        value = os.environ.get(name)
+        if value:
+            os.environ[f"$ENV:{name}"] = value
 
     print(f"workspace_id : {workspace_id}")
     print(f"environment  : {environment}")

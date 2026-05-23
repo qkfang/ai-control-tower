@@ -3,6 +3,12 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $appDir    = Resolve-Path (Join-Path $scriptDir '..\src\agentct')
 Push-Location $appDir
 
+$baseName    = 'aictt'
+$environment = 'dev'
+
+$rgName     = "rg-$baseName-$environment"
+$webAppName = "$baseName-web-$environment"
+
 $publishDir = Join-Path $appDir 'publish'
 $zipPath    = Join-Path $appDir 'publish.zip'
 
@@ -15,6 +21,6 @@ dotnet publish agentct.csproj --configuration Release --output $publishDir --no-
 
 Compress-Archive -Path (Join-Path $publishDir '*') -DestinationPath $zipPath -Force
 
-az webapp deploy --resource-group 'rg-aictt' --name 'aictt-web' --src-path $zipPath --type zip
+az webapp deploy --resource-group $rgName --name $webAppName --src-path $zipPath --type zip
 
 Pop-Location
