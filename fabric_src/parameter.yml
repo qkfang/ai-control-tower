@@ -68,3 +68,14 @@ find_replace:
           _ALL_: "$ENV:FABRIC_STORAGE_ACCOUNT"
       item_type: "Lakehouse"
 
+    # Fabric cloud connection GUID bound to the ADLS Gen2 shortcuts in
+    # shortcuts.metadata.json. The connection's configured URL in the target
+    # Fabric tenant must exactly match the shortcut location
+    # (https://<FABRIC_STORAGE_ACCOUNT>.dfs.core.windows.net) or Fabric returns
+    # DMTSConnectionServerAndTargetPathMismatch. Pulled from the
+    # FABRIC_ADLS_CONNECTION_ID environment variable.
+    - find_value: "9a59d63e-fb44-4338-9fcf-da6b0569ace4"
+      replace_value:
+          _ALL_: "$ENV:FABRIC_ADLS_CONNECTION_ID"
+      item_type: "Lakehouse"
+
