@@ -88,6 +88,40 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09
   }
 }
 
+// ── Log Analytics export tables / matching blob containers ──────────────────
+var logAnalyticsExportTables = [
+  'AppRequests'
+  'AppDependencies'
+  'AppExceptions'
+  'AppTraces'
+  'AppEvents'
+  'AppPageViews'
+  'AppPerformanceCounters'
+  'AppAvailabilityResults'
+  'AppBrowserTimings'
+  'AppSystemEvents'
+  'AppMetrics'
+  'AppServiceHTTPLogs'
+  'AppServiceConsoleLogs'
+  'AppServiceAppLogs'
+  'AzureDiagnostics'
+  'AzureMetrics'
+]
+
+// ── Blob containers for Log Analytics data export (am-<tablename>) ──────────
+resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2023-05-01' = {
+  parent: storageAccount
+  name: 'default'
+}
+
+resource logAnalyticsExportContainers 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = [for tableName in logAnalyticsExportTables: {
+  parent: blobService
+  name: 'am-${toLower(tableName)}'
+  properties: {
+    publicAccess: 'None'
+  }
+}]
+
 // ── Log Analytics Data Export → Storage Account (HNS) ───────────────────────
 resource logAnalyticsDataExport 'Microsoft.OperationalInsights/workspaces/dataExports@2023-09-01' = {
   parent: logAnalyticsWorkspace
@@ -96,26 +130,12 @@ resource logAnalyticsDataExport 'Microsoft.OperationalInsights/workspaces/dataEx
     destination: {
       resourceId: storageAccount.id
     }
-    tableNames: [
-      'AppRequests'
-      'AppDependencies'
-      'AppExceptions'
-      'AppTraces'
-      'AppEvents'
-      'AppPageViews'
-      'AppPerformanceCounters'
-      'AppAvailabilityResults'
-      'AppBrowserTimings'
-      'AppSystemEvents'
-      'AppMetrics'
-      'AppServiceHTTPLogs'
-      'AppServiceConsoleLogs'
-      'AppServiceAppLogs'
-      'AzureDiagnostics'
-      'AzureMetrics'
-    ]
+    tableNames: logAnalyticsExportTables
     enable: true
   }
+  dependsOn: [
+    logAnalyticsExportContainers
+  ]
 }
 
 
