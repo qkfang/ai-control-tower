@@ -7,6 +7,15 @@ param location string = 'australiaeast'
 @description('Principal object IDs to grant access to deployed resources')
 param principals array = []
 
+@description('Deploy the App Service Plan')
+param deployAppServicePlan bool = true
+
+@description('Deploy the Web App')
+param deployWebApp bool = true
+
+@description('Deploy the AI Foundry account')
+param deployFoundry bool = true
+
 var commonTags = {
   
 }
@@ -124,7 +133,7 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
 
 
 // ── App Service Plan ─────────────────────────────────────────────────────────
-resource appServicePlan 'Microsoft.Web/serverfarms@2023-12-01' = {
+resource appServicePlan 'Microsoft.Web/serverfarms@2023-12-01' = if (deployAppServicePlan) {
   name: appServicePlanName
   location: location
   tags: commonTags
@@ -141,7 +150,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2023-12-01' = {
 
 
 // ── AI Foundry ───────────────────────────────────────────────────────────────
-module azureFoundry 'foundry.bicep' = {
+module azureFoundry 'foundry.bicep' = if (deployFoundry) {
   name: 'foundryDeployment'
   params: {
     name: foundryName
@@ -151,13 +160,13 @@ module azureFoundry 'foundry.bicep' = {
 }
 
 // ── Role assignments: API App → Foundry ──────────────────────────────────────
-resource foundryAccount 'Microsoft.CognitiveServices/accounts@2025-10-01-preview' existing = {
+resource foundryAccount 'Microsoft.CognitiveServices/accounts@2025-10-01-preview' existing = if (deployFoundry) {
   name: foundryName
   dependsOn: [azureFoundry]
 }
 
 // ── Foundry diagnostic settings → Log Analytics + Storage ────────────────────
-resource foundryDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+resource foundryDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = if (deployFoundry) {
   name: 'send-to-law'
   scope: foundryAccount
   properties: {
@@ -183,32 +192,32 @@ resource foundryDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-pr
 
 
 // ── Web App ──────────────────────────────────────────────────────────────────
-module webApp 'webapp.bicep' = {
+module webApp 'webapp.bicep' = if (deployWebApp) {
   name: 'webAppDeployment'
   params: {
     name: webAppName
     location: location
     tags: commonTags
-    appServicePlanId: appServicePlan.id
+    appServicePlanId: deployAppServicePlan ? appServicePlan.id : ''
     appSettings: {
       APPLICATIONINSIGHTS_CONNECTION_STRING: appInsights.properties.ConnectionString
       ApplicationInsightsAgent_EXTENSION_VERSION: '~3'
-      AZURE_AI_PROJECT_ENDPOINT: azureFoundry.outputs.projectEndpoint
-      AZURE_AI_MODEL_DEPLOYMENT_NAME: azureFoundry.outputs.deploymentName
+      AZURE_AI_PROJECT_ENDPOINT: deployFoundry ? azureFoundry!.outputs.projectEndpoint : ''
+      AZURE_AI_MODEL_DEPLOYMENT_NAME: deployFoundry ? azureFoundry!.outputs.deploymentName : ''
       AZURE_TENANT_ID: tenant().tenantId
     }
     appCommandLine: 'dotnet agentct.dll'
   }
 }
 
-resource webAppResource 'Microsoft.Web/sites@2024-04-01' existing = {
+resource webAppResource 'Microsoft.Web/sites@2024-04-01' existing = if (deployWebApp) {
   name: webAppName
   dependsOn: [webApp]
 }
 
 
 // ── App Insights diagnostic settings for Web App ─────────────────────────────
-resource webAppDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+resource webAppDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = if (deployWebApp) {
   name: 'send-to-law'
   scope: webAppResource
   properties: {
@@ -243,7 +252,7 @@ var azureAIDeveloperRoleId = '64702f94-c441-49e6-a78b-ef80e0188fee'
 var storageBlobDataContributorRoleId = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
 
 // ── Role assignments: additional principals ──────────────────────────────────
-resource userOpenAIUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for principal in principals: {
+resource userOpenAIUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for principal in principals: if (deployFoundry) {
   name: guid(foundryAccount.id, principal.id, cognitiveServicesOpenAIUserRoleId)
   scope: foundryAccount
   properties: {
@@ -254,38 +263,38 @@ resource userOpenAIUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01'
 }]
 
 // ── Role assignment: Web App managed identity → Foundry ──────────────────────
-resource webAppOpenAIUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource webAppOpenAIUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (deployWebApp && deployFoundry) {
   name: guid(foundryAccount.id, resourceId('Microsoft.Web/sites', webAppName), cognitiveServicesOpenAIUserRoleId)
   scope: foundryAccount
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', cognitiveServicesOpenAIUserRoleId)
-    principalId: webApp.outputs.principalId
+    principalId: webApp!.outputs.principalId
     principalType: 'ServicePrincipal'
   }
 }
 
-resource webAppAIUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource webAppAIUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (deployWebApp && deployFoundry) {
   name: guid(foundryAccount.id, resourceId('Microsoft.Web/sites', webAppName), azureAIUserRoleId)
   scope: foundryAccount
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', azureAIUserRoleId)
-    principalId: webApp.outputs.principalId
+    principalId: webApp!.outputs.principalId
     principalType: 'ServicePrincipal'
   }
 }
 
-resource webAppAIDeveloperRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource webAppAIDeveloperRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (deployWebApp && deployFoundry) {
   name: guid(foundryAccount.id, resourceId('Microsoft.Web/sites', webAppName), azureAIDeveloperRoleId)
   scope: foundryAccount
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', azureAIDeveloperRoleId)
-    principalId: webApp.outputs.principalId
+    principalId: webApp!.outputs.principalId
     principalType: 'ServicePrincipal'
   }
 }
 
 // ── Role assignments: Azure AI User → principals ─────────────────────────────
-resource userAIUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for principal in principals: {
+resource userAIUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for principal in principals: if (deployFoundry) {
   name: guid(foundryAccount.id, principal.id, azureAIUserRoleId)
   scope: foundryAccount
   properties: {
@@ -296,7 +305,7 @@ resource userAIUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = [
 }]
 
 // ── Role assignments: Azure AI Developer → principals (agents/write) ─────────
-resource userAIDeveloperRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for principal in principals: {
+resource userAIDeveloperRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for principal in principals: if (deployFoundry) {
   name: guid(foundryAccount.id, principal.id, azureAIDeveloperRoleId)
   scope: foundryAccount
   properties: {
