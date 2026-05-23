@@ -27,3 +27,36 @@ find_replace:
           _ALL_: "AI_Control_Tower_v2"
       item_type: "Notebook"
 
+    # Azure resource group name baked into Log Analytics / App Insights resource
+    # IDs across notebook, KQL queryset and KQL dashboard files. Pulled from
+    # the FABRIC_RESOURCE_GROUP environment variable via fabric-cicd's
+    # enable_environment_variable_replacement feature flag.
+    - find_value: "rg-aictt"
+      replace_value:
+          _ALL_: "$ENV:FABRIC_RESOURCE_GROUP"
+      item_type: ["Notebook", "KQLQueryset", "KQLDashboard"]
+
+    # Azure subscription ID baked into Log Analytics / App Insights resource
+    # IDs across notebook, KQL queryset and KQL dashboard files. Pulled from
+    # the FABRIC_SUBSCRIPTION_ID environment variable.
+    - find_value: "873a4995-e21b-47e2-953e-f2e88e2fa4f9"
+      replace_value:
+          _ALL_: "$ENV:FABRIC_SUBSCRIPTION_ID"
+      item_type: ["Notebook", "KQLQueryset", "KQLDashboard"]
+
+    # Log Analytics workspace name baked into resource IDs across notebook,
+    # KQL queryset and KQL dashboard files. Pulled from the FABRIC_LAW_NAME
+    # environment variable.
+    - find_value: "aictt-law"
+      replace_value:
+          _ALL_: "$ENV:FABRIC_LAW_NAME"
+      item_type: ["Notebook", "KQLQueryset", "KQLDashboard"]
+
+    # Application Insights component name baked into resource IDs across
+    # notebook, KQL queryset and KQL dashboard files. Pulled from the
+    # FABRIC_AI_NAME environment variable.
+    - find_value: "aictt-ai"
+      replace_value:
+          _ALL_: "$ENV:FABRIC_AI_NAME"
+      item_type: ["Notebook", "KQLQueryset", "KQLDashboard"]
+
