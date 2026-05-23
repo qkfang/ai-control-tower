@@ -49,7 +49,7 @@ def main() -> int:
         return 1
 
     repository_directory = str(
-        (Path(__file__).resolve().parent.parent / "fabric_cicd")
+        (Path(__file__).resolve().parent.parent / "fabric_src")
     )
 
     if os.environ.get("FABRIC_DEBUG", "false").lower() == "true":

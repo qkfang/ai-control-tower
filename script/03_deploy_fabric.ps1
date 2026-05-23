@@ -1,8 +1,8 @@
 # Inline fabric-cicd deployment runner.
-# Environment variables are loaded from fabric_cicd_deploy/.env by deploy.py.
+# Environment variables are loaded from fabric_cicd/.env by deploy.py.
 
 $repoRoot   = Split-Path -Parent $PSScriptRoot
-$deployRoot = Join-Path $repoRoot "fabric_cicd_deploy"
+$deployRoot = Join-Path $repoRoot "fabric_cicd"
 
 Push-Location $deployRoot
 
