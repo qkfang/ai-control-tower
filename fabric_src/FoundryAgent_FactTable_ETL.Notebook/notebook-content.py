@@ -133,7 +133,7 @@ print(f"Full data path: {BASE_PATH}")
 # Verify the path is accessible
 try:
     files = spark.read.format("binaryFile").load(f"{ONELAKE_BASE_PATH}/*").limit(1)
-    print("âœ“ OneLake path is accessible")
+    print("OneLake path is accessible")
 except Exception as e:
     print(f"âš  Warning: Could not verify path - {str(e)[:100]}")
 
@@ -319,7 +319,7 @@ try:
         print("Loading all historical data (first run or full refresh)")
     
     total_count = all_signals_df.count()
-    print(f"âœ“ Loaded {total_count:,} total records from OneLake")
+    print(f"Loaded {total_count:,} total records from OneLake")
     
     # Show signal type distribution
     print("\nSignal type distribution:")
@@ -329,10 +329,10 @@ try:
     raw_df = all_signals_df.filter(col("DependencyType") == "AI")
     
     raw_count = raw_df.count()
-    print(f"âœ“ Filtered to {raw_count:,} AI signal records ({(raw_count/total_count*100):.1f}% of total)")
+    print(f"Filtered to {raw_count:,} AI signal records ({(raw_count/total_count*100):.1f}% of total)")
     
 except Exception as e:
-    print(f"âœ— Error reading data: {str(e)}")
+    print(f"Error reading data: {str(e)}")
     raise
 
 # METADATA ********************
@@ -368,7 +368,7 @@ foundry_df = raw_df.filter(
 )
 
 foundry_count = foundry_df.count()
-print(f"âœ“ Filtered to {foundry_count:,} Foundry agent spans")
+print(f"Filtered to {foundry_count:,} Foundry agent spans")
 print(f"  ({(foundry_count/raw_count*100):.1f}% of total records)" if raw_count > 0 else "")
 
 # METADATA ********************
@@ -445,7 +445,7 @@ transformed_df = foundry_df.select(
     col("_source_file").alias("source_file")
 )
 
-print("âœ“ Transformed data with extracted Properties fields")
+print("Transformed data with extracted Properties fields")
 print(f"  Columns: {len(transformed_df.columns)}")
 
 # METADATA ********************
@@ -479,7 +479,7 @@ final_df = final_df.withColumn("status",
     .otherwise("Unknown")
 )
 
-print("âœ“ Added computed columns")
+print("Added computed columns")
 print(f"  Final column count: {len(final_df.columns)}")
 
 # METADATA ********************
@@ -559,7 +559,7 @@ if INCREMENTAL_LOAD:
          .whenNotMatchedInsertAll() \
          .execute()
         
-        print(f"âœ“ Merged records into {TARGET_TABLE}")
+        print(f"Merged records into {TARGET_TABLE}")
     else:
         print(f"Table {TARGET_TABLE} does not exist - creating new table")
         
@@ -571,7 +571,7 @@ if INCREMENTAL_LOAD:
             .option("overwriteSchema", "true") \
             .saveAsTable(TARGET_TABLE)
         
-        print(f"âœ“ Created new table {TARGET_TABLE}")
+        print(f"Created new table {TARGET_TABLE}")
 else:
     # Full refresh - overwrite entire table
     print(f"Full refresh - overwriting {TARGET_TABLE}")
@@ -583,7 +583,7 @@ else:
         .option("overwriteSchema", "true") \
         .saveAsTable(TARGET_TABLE)
     
-    print(f"âœ“ Overwrote table {TARGET_TABLE}")
+    print(f"Overwrote table {TARGET_TABLE}")
 
 # METADATA ********************
 
@@ -597,7 +597,7 @@ else:
 # Verify the table was created/updated
 result_df = spark.sql(f"SELECT COUNT(*) as record_count FROM {TARGET_TABLE}")
 record_count = result_df.collect()[0]["record_count"]
-print(f"\nâœ“ Table {TARGET_TABLE} now contains {record_count:,} records")
+print(f"\nTable {TARGET_TABLE} now contains {record_count:,} records")
 
 # METADATA ********************
 
@@ -626,11 +626,11 @@ print(f"\nâœ“ Table {TARGET_TABLE} now contains {record_count:,} records")
 
 # Optimize the table (compacts small files)
 spark.sql(f"OPTIMIZE {TARGET_TABLE}")
-print(f"âœ“ Optimized table {TARGET_TABLE}")
+print(f"Optimized table {TARGET_TABLE}")
 
 # Z-order by commonly filtered columns for faster queries
 spark.sql(f"OPTIMIZE {TARGET_TABLE} ZORDER BY (agent_id, time_generated)")
-print(f"âœ“ Applied Z-Order optimization on agent_id, time_generated")
+print(f"Applied Z-Order optimization on agent_id, time_generated")
 
 # METADATA ********************
 
@@ -644,7 +644,7 @@ print(f"âœ“ Applied Z-Order optimization on agent_id, time_generated")
 # Vacuum old versions (retain 7 days by default)
 # Uncomment to run - this deletes old data files
 # spark.sql(f"VACUUM {TARGET_TABLE} RETAIN 168 HOURS")
-# print(f"âœ“ Vacuumed old versions from {TARGET_TABLE}")
+# print(f"Vacuumed old versions from {TARGET_TABLE}")
 
 # METADATA ********************
 

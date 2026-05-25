@@ -59,6 +59,11 @@ model Model
 			sourceColumn: request_model
 			lineageTag: 00000000-0000-0000-0000-000000000014
 		
+		column response_id
+			dataType: string
+			sourceColumn: response_id
+			lineageTag: 00000000-0000-0000-0000-000000000024
+		
 		column duration_ms
 			dataType: double
 			sourceColumn: duration_ms
