@@ -52,6 +52,7 @@ ITEM_TYPES_IN_SCOPE = [
 # picks up OS env vars whose names literally start with "$ENV:", so deploy.py
 # re-exports these under that prefixed name at runtime.
 PARAMETERIZED_ENV_VARS = [
+    "FABRIC_WORKSPACE_NAME",
     "FABRIC_RESOURCE_GROUP",
     "FABRIC_SUBSCRIPTION_ID",
     "FABRIC_LAW_NAME",

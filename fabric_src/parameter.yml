@@ -10,21 +10,22 @@ find_replace:
     - find_value: "3169a0db-1de9-41e3-804c-9b0e6aaf505e"
       replace_value:
           _ALL_: "$items.Lakehouse.AI_Foundry_Control_Tower.$id"
-      item_type: "Notebook"
+      item_type: ["Notebook", "SemanticModel"]
 
     # Source workspace GUID embedded in the notebook metadata.
     # Replace with the target workspace id.
     - find_value: "187645de-b325-455e-85ca-08f47beac19e"
       replace_value:
           _ALL_: "$workspace.$id"
-      item_type: "Notebook"
+      item_type: ["Notebook", "SemanticModel"]
 
     # Source workspace display name baked into the OneLake abfss URI.
-    # Replace with the target workspace display name (hardcoded — fabric-cicd
-    # v1.0.0 does not support the $workspace.$name dynamic variable).
+    # Replace with the target workspace display name. Pulled from the
+    # FABRIC_WORKSPACE_NAME environment variable (fabric-cicd v1.0.0 does not
+    # support the $workspace.$name dynamic variable).
     - find_value: "AI_Control_Tower_v2"
       replace_value:
-          _ALL_: "AI_Control_Tower_v2"
+          _ALL_: "$ENV:FABRIC_WORKSPACE_NAME"
       item_type: "Notebook"
 
     # Azure resource group name baked into Log Analytics / App Insights resource
