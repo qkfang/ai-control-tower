@@ -6,10 +6,10 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-	/// Connection to Lakehouse via OneLake
+	/// Connection to Lakehouse via SQL Endpoint (required for Direct Lake)
 	expression Lakehouse_AI_Foundry_Control_Tower = 
 			let
-				database = Lakehouse.Contents(null, "187645de-b325-455e-85ca-08f47beac19e", "AI_Foundry_Control_Tower")
+				database = Sql.Database("zylcdhpgv7uezc6dy7d3ngcwyi-btuwevriyeme3inzt7revalpxu.datawarehouse.fabric.microsoft.com", "AI_Foundry_Control_Tower")
 			in
 				database
 		lineageTag: 00000000-0000-0000-0000-000000000001
