@@ -184,6 +184,9 @@ module azureFoundry 'foundry.bicep' = if (deployFoundry) {
     name: foundryName
     location: location
     tags: commonTags
+    appInsightsId: appInsights.id
+    appInsightsConnectionString: appInsights.properties.ConnectionString
+    appInsightsConnectionName: appInsightsName
   }
 }
 

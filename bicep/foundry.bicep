@@ -1,6 +1,10 @@
 param name string
 param location string
 param tags object = {}
+param appInsightsId string = ''
+@secure()
+param appInsightsConnectionString string = ''
+param appInsightsConnectionName string = 'appinsights-connection'
 
 resource aiHub 'Microsoft.CognitiveServices/accounts@2025-10-01-preview' = {
   name: name
@@ -32,6 +36,50 @@ resource aiProject 'Microsoft.CognitiveServices/accounts/projects@2025-06-01' = 
     type: 'SystemAssigned'
   }
   properties: {}
+}
+
+resource foundryAppInsightsConnection 'Microsoft.CognitiveServices/accounts/connections@2025-10-01-preview' = if (!empty(appInsightsId)) {
+  parent: aiHub
+  name: appInsightsConnectionName
+  properties: {
+    authType: 'ApiKey'
+    category: 'AppInsights'
+    target: appInsightsId
+    credentials: {
+      key: appInsightsConnectionString
+    }
+    useWorkspaceManagedIdentity: false
+    isSharedToAll: false
+    sharedUserList: []
+    peRequirement: 'NotRequired'
+    peStatus: 'NotApplicable'
+    metadata: {
+      ApiType: 'Azure'
+      ResourceId: appInsightsId
+    }
+  }
+}
+
+resource projectAppInsightsConnection 'Microsoft.CognitiveServices/accounts/projects/connections@2025-06-01' = if (!empty(appInsightsId)) {
+  parent: aiProject
+  name: appInsightsConnectionName
+  properties: {
+    authType: 'ApiKey'
+    category: 'AppInsights'
+    target: appInsightsId
+    credentials: {
+      key: appInsightsConnectionString
+    }
+    useWorkspaceManagedIdentity: false
+    isSharedToAll: false
+    sharedUserList: []
+    peRequirement: 'NotRequired'
+    peStatus: 'NotApplicable'
+    metadata: {
+      ApiType: 'Azure'
+      ResourceId: appInsightsId
+    }
+  }
 }
 
 resource gpt4oDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
