@@ -29,7 +29,6 @@ var commonTags = {
 }
 var foundryName = '${baseName}-foundry-${environment}'
 var storageAccountName = replace('${baseName}sa${environment}', '-', '')
-var storageAccountBName = replace('${baseName}sab${environment}', '-', '')
 var logAnalyticsName = '${baseName}-law-${environment}'
 var appInsightsName = '${baseName}-ai-${environment}'
 var appServicePlanName = '${baseName}-asp-${environment}'
