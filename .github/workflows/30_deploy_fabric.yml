@@ -4,21 +4,10 @@ on:
   push:
     branches: [main]
     paths:
-      - "fabric/**"
+      - "fabric_src/**"
+      - "fabric_cicd/**"
+      - "script/03_deploy_fabric.ps1"
   workflow_dispatch:
-    inputs:
-      configPath:
-        description: "Path to deployment config JSON"
-        required: false
-        default: "fabric/deployment_package/deployment_config.json"
-      whatIf:
-        description: "Preview only (no changes)"
-        required: false
-        default: "false"
-      skipShortcuts:
-        description: "Skip Lakehouse shortcut creation"
-        required: false
-        default: "false"
 
 permissions:
   contents: read
@@ -31,6 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
       - name: Azure CLI Login
         uses: azure/login@v1
         with:
@@ -38,14 +32,4 @@ jobs:
 
       - name: Deploy to Fabric
         shell: pwsh
-        working-directory: fabric/deployment_package
-        run: |
-          $configPath = "${{ github.event.inputs.configPath }}"
-          if ([string]::IsNullOrWhiteSpace($configPath)) { $configPath = "deployment_config.json" }
-          else { $configPath = $configPath -replace '^fabric/deployment_package/', '' }
-
-          $params = @{ ConfigPath = $configPath }
-          if ("${{ github.event.inputs.whatIf }}" -eq "true") { $params.WhatIf = $true }
-          if ("${{ github.event.inputs.skipShortcuts }}" -eq "true") { $params.SkipShortcuts = $true }
-
-          ./deploy_to_fabric.ps1 @params
+        run: ./script/03_deploy_fabric.ps1
