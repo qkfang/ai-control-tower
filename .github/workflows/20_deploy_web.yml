@@ -41,4 +41,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'aictt-web-dev'
+          resource-group-name: 'rg-aictt-dev'
           package: ./publish

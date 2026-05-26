@@ -19,14 +19,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    #   - name: Create Resource Group
-    #     run: az group create --name 'rg-agentct' --location 'eastus2'
+      - name: Create Resource Group
+        run: az group create --name 'rg-aictt-dev' --location 'australiaeast'
 
       - name: Deploy Bicep
         working-directory: bicep
         run: |
           az deployment group create \
-            --name 'agentctt-dev' \
-            --resource-group 'rg-agentctt' \
+            --name 'aictt-dev' \
+            --resource-group 'rg-aictt-dev' \
             --template-file './main.bicep' \
             --parameters './main-dev.bicepparam'
