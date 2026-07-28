@@ -1,0 +1,7 @@
+activeProfile: default
+profiles:
+  default:
+    semanticModels:
+      controlTower:
+        workspaceId: 5662e90c-c128-4d18-a1b9-9fe24a816fbd
+        itemId: 3b48550f-7643-4e21-9150-0c645dc7a03b

@@ -1,0 +1,25 @@
+EVALUATE
+VAR bucketMinutes = {{BUCKET_MINUTES}}
+VAR base =
+    ADDCOLUMNS(
+        CALCULATETABLE(
+            foundryagent_fact{{FILTERS_SUFFIX}}
+        ),
+        "Bucket",
+            VAR t = foundryagent_fact[time_generated]
+            VAR startOfDay = DATE( YEAR( t ), MONTH( t ), DAY( t ) )
+            VAR minuteOfDay = HOUR( t ) * 60 + MINUTE( t )
+            VAR bucketStart = INT( minuteOfDay / bucketMinutes ) * bucketMinutes
+            RETURN
+                startOfDay + DIVIDE( bucketStart, 1440 )
+    )
+RETURN
+    GROUPBY(
+        base,
+        [Bucket],
+        "Tokens", SUMX( CURRENTGROUP(), foundryagent_fact[total_tokens] ),
+        "InputTokens", SUMX( CURRENTGROUP(), foundryagent_fact[input_tokens] ),
+        "OutputTokens", SUMX( CURRENTGROUP(), foundryagent_fact[output_tokens] ),
+        "Invocations", COUNTX( CURRENTGROUP(), foundryagent_fact[response_id] )
+    )
+ORDER BY [Bucket]

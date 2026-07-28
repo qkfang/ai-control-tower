@@ -1,0 +1,12 @@
+EVALUATE
+SUMMARIZECOLUMNS(
+    foundryagent_fact[agent_id],
+    foundryagent_fact[request_model],
+    {{FILTERS_PREFIX}}"Invocations", [Total Invocations],
+    "TotalTokens", [Total Tokens],
+    "InputTokens", SUM( foundryagent_fact[input_tokens] ),
+    "OutputTokens", SUM( foundryagent_fact[output_tokens] ),
+    "AvgDurationMs", [Avg Duration (ms)],
+    "SuccessRate", [Success Rate %]
+)
+ORDER BY [TotalTokens] DESC

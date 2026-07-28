@@ -1,0 +1,8 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+    "mark": { "type": "area", "line": true, "point": true },
+    "encoding": {
+        "x": { "field": "Bucket", "type": "temporal", "title": "Time" },
+        "y": { "field": "Tokens", "type": "quantitative", "title": "Tokens" }
+    }
+}

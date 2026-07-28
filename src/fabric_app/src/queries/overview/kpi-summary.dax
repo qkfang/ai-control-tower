@@ -1,0 +1,16 @@
+EVALUATE
+CALCULATETABLE(
+    ROW(
+        "ActiveAgents", DISTINCTCOUNT( foundryagent_fact[agent_id] ),
+        "Models", DISTINCTCOUNT( foundryagent_fact[request_model] ),
+        "Operations", DISTINCTCOUNT( foundryagent_fact[operation_name] ),
+        "Invocations", [Total Invocations],
+        "TotalTokens", [Total Tokens],
+        "InputTokens", SUM( foundryagent_fact[input_tokens] ),
+        "OutputTokens", SUM( foundryagent_fact[output_tokens] ),
+        "AvgDurationMs", [Avg Duration (ms)],
+        "SuccessRate", [Success Rate %],
+        "WindowStart", MIN( foundryagent_fact[time_generated] ),
+        "WindowEnd", MAX( foundryagent_fact[time_generated] )
+    ){{FILTERS_SUFFIX}}
+)

@@ -1,0 +1,7 @@
+EVALUATE
+SUMMARIZECOLUMNS(
+    foundryagent_fact[agent_id],
+    foundryagent_fact[operation_name],
+    foundryagent_fact[date_key]
+)
+ORDER BY foundryagent_fact[date_key], foundryagent_fact[agent_id]

@@ -1,0 +1,9 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+    "mark": { "type": "arc", "innerRadius": 55, "cornerRadius": 3, "padAngle": 0.02 },
+    "encoding": {
+        "theta": { "field": "Invocations", "type": "quantitative", "stack": true },
+        "color": { "field": "Operation", "type": "nominal", "title": "Operation" }
+    },
+    "view": { "stroke": null }
+}

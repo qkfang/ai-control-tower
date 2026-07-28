@@ -1,0 +1,32 @@
+{
+  "name": "AIControlRoom-a1b2c3d4.json",
+  "dataColors": [
+    "#22D3EE",
+    "#2DD4BF",
+    "#22C55E",
+    "#F59E0B",
+    "#8B5CF6",
+    "#3B82F6",
+    "#EC4899",
+    "#EF4444"
+  ],
+  "background": "#0A0E1A",
+  "foreground": "#E5E7EB",
+  "foregroundNeutralSecondary": "#94A3B8",
+  "tableAccent": "#22D3EE",
+  "good": "#22C55E",
+  "neutral": "#F59E0B",
+  "bad": "#EF4444",
+  "maximum": "#22C55E",
+  "minimum": "#EF4444",
+  "textClasses": {
+    "label": {
+      "color": "#E5E7EB",
+      "fontFace": "Segoe UI"
+    },
+    "title": {
+      "color": "#E5E7EB",
+      "fontFace": "Segoe UI Semibold"
+    }
+  }
+}

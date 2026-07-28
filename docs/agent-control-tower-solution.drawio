@@ -1,0 +1,166 @@
+<mxfile host="Electron" agent="AI Control Tower" pages="2">
+  <diagram id="ai-control-tower" name="AI Control Tower">
+    <mxGraphModel dx="1735" dy="1489" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;fontColor=#1F3864;" value="AI Control Tower — Solution Design" vertex="1">
+          <mxGeometry height="40" width="620" x="798.5" y="-6" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_user" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DEEBF7;strokeColor=#9DC3E6;verticalAlign=top;fontStyle=1;fontColor=#1F3864;dashed=0;" value="Client" vertex="1">
+          <mxGeometry height="150" width="300" x="368" y="98" as="geometry" />
+        </mxCell>
+        <mxCell id="browser" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E75B6;fontColor=#1F3864;" value="Browser UI&#xa;wwwroot/index.html&#xa;(manual prompt + traffic simulator)" vertex="1">
+          <mxGeometry height="90" width="240" x="398" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_app" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E2EFDA;strokeColor=#A9D08E;verticalAlign=top;fontStyle=1;fontColor=#375623;" value="Compute — App Service (Linux)" vertex="1">
+          <mxGeometry height="200" width="459" x="368" y="325" as="geometry" />
+        </mxCell>
+        <mxCell id="webapp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#548235;fontColor=#375623;fontStyle=1;" value="aictt_app (.NET 10 minimal API)&#xa;system-assigned managed identity" vertex="1">
+          <mxGeometry height="50" width="407" x="390" y="365" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_support" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F2F7EE;strokeColor=#70AD47;fontColor=#375623;" value="/support&#xa;CtAgSupport" vertex="1">
+          <mxGeometry height="70" width="120" x="392" y="435" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_doc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F2F7EE;strokeColor=#70AD47;fontColor=#375623;" value="/doc&#xa;CtAgDoc" vertex="1">
+          <mxGeometry height="70" width="120" x="532" y="435" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_customer" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F2F7EE;strokeColor=#70AD47;fontColor=#375623;" value="/customer&#xa;CtAgCustomer" vertex="1">
+          <mxGeometry height="70" width="120" x="672" y="435" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_foundry" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4D6;strokeColor=#F4B183;verticalAlign=top;fontStyle=1;fontColor=#833C00;" value="Azure AI Foundry" vertex="1">
+          <mxGeometry height="150" width="458" x="367" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="foundry_proj" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#ED7D31;fontColor=#833C00;fontStyle=1;" value="Foundry account + project" vertex="1">
+          <mxGeometry height="80" width="177" x="410.5" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="foundry_model" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#ED7D31;fontColor=#833C00;" value="gpt-4o model deployment&#xa;3 declarative agents (Responses API)" vertex="1">
+          <mxGeometry height="80" width="195" x="603.5" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_mon" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#FFD966;verticalAlign=top;fontStyle=1;fontColor=#7F6000;" value="Observability" vertex="1">
+          <mxGeometry height="255" width="421" x="903" y="384" as="geometry" />
+        </mxCell>
+        <mxCell id="appinsights" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#BF9000;fontColor=#7F6000;fontStyle=1;" value="Application Insights&#xa;(workspace-based)" vertex="1">
+          <mxGeometry height="60" width="166" x="932" y="439" as="geometry" />
+        </mxCell>
+        <mxCell id="loganalytics" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#BF9000;fontColor=#7F6000;fontStyle=1;" value="Log Analytics workspace&#xa;Data Export rule" vertex="1">
+          <mxGeometry height="60" width="170" x="1128" y="439" as="geometry" />
+        </mxCell>
+        <mxCell id="adls" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#BF9000;fontColor=#7F6000;" value="ADLS Gen2 (HNS) — Log Analytics export target" vertex="1">
+          <mxGeometry height="45" width="364" x="931" y="547" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_fabric" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#B085C9;verticalAlign=top;fontStyle=1;fontColor=#4A235A;" value="Microsoft Fabric" vertex="1">
+          <mxGeometry height="436" width="513" x="1390" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="fab_capacity" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#8E44AD;fontColor=#4A235A;fontStyle=1;" value="Fabric Capacity + Workspace" vertex="1">
+          <mxGeometry height="45" width="467" x="1412" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="fab_lakehouse" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5EEF8;strokeColor=#8E44AD;fontColor=#4A235A;" value="Lakehouse (schema-enabled)&#xa;OneLake shortcuts → ADLS export containers" vertex="1">
+          <mxGeometry height="90" width="216" x="1412" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="fab_notebook" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5EEF8;strokeColor=#8E44AD;fontColor=#4A235A;" value="ETL Notebook&#xa;FoundryAgent_FactTable_ETL&#xa;builds foundryagent_fact Delta table" vertex="1">
+          <mxGeometry height="90" width="211" x="1668" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="fab_kql" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5EEF8;strokeColor=#8E44AD;fontColor=#4A235A;" value="KQL Queryset + KQL Dashboard&#xa;(App Insights &amp; Log Analytics)" vertex="1">
+          <mxGeometry height="80" width="219" x="1409" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="fab_semantic" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5EEF8;strokeColor=#8E44AD;fontColor=#4A235A;" value="Semantic Model" vertex="1">
+          <mxGeometry height="80" width="209" x="1668" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="fab_report" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5EEF8;strokeColor=#8E44AD;fontColor=#4A235A;fontStyle=1;" value="Power BI Report&#xa;AI_ControlTower_Report" vertex="1">
+          <mxGeometry height="70" width="208" x="1668" y="636" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_iac" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDEDED;strokeColor=#B7B7B7;verticalAlign=top;fontStyle=1;fontColor=#404040;" value="Infrastructure as Code &amp; Deployment" vertex="1">
+          <mxGeometry height="150" width="486" x="882" y="104" as="geometry" />
+        </mxCell>
+        <mxCell id="iac_bicep" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7F7F7F;fontColor=#404040;" value="Bicep&#xa;main.bicep · foundry.bicep · webapp.bicep · modules/fabric.bicep" vertex="1">
+          <mxGeometry height="90" width="216" x="903" y="144" as="geometry" />
+        </mxCell>
+        <mxCell id="iac_scripts" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7F7F7F;fontColor=#404040;" value="Deployment scripts&#xa;01_deploy_bicep · 02_deploy_app · 03_deploy_fabric&#xa;fabric_cicd (deploy.py)" vertex="1">
+          <mxGeometry height="90" width="203" x="1140" y="144" as="geometry" />
+        </mxCell>
+        <mxCell id="e_browser_web" edge="1" parent="1" source="browser" style="endArrow=block;html=1;strokeColor=#2E75B6;fontColor=#1F3864;fontStyle=1;" target="lane_app" value="HTTP">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_web_foundry" edge="1" parent="1" source="lane_app" style="endArrow=block;html=1;strokeColor=#ED7D31;fontColor=#833C00;fontStyle=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="lane_foundry" value="Managed identity&#xa;(Responses API)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_web_ai" edge="1" parent="1" source="lane_app" style="endArrow=block;html=1;strokeColor=#BF9000;fontColor=#7F6000;fontStyle=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=0.991;exitY=0.434;exitDx=0;exitDy=0;exitPerimeter=0;" target="lane_mon" value="OpenTelemetry">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_foundry_ai" edge="1" parent="1" source="lane_foundry" style="endArrow=block;html=1;strokeColor=#BF9000;fontColor=#7F6000;dashed=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="lane_mon" value="Diagnostics">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ai_la" edge="1" parent="1" source="appinsights" style="endArrow=block;html=1;strokeColor=#BF9000;" target="loganalytics" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_la_adls" edge="1" parent="1" source="loganalytics" style="endArrow=block;html=1;strokeColor=#BF9000;fontColor=#7F6000;fontStyle=1;" target="adls" value="Data Export">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_adls_lake" edge="1" parent="1" source="adls" style="endArrow=block;html=1;strokeColor=#8E44AD;fontColor=#4A235A;fontStyle=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="fab_lakehouse" value="OneLake shortcuts">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1287" y="607" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_lake_notebook" edge="1" parent="1" source="fab_lakehouse" style="endArrow=block;html=1;strokeColor=#8E44AD;" target="fab_notebook" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_notebook_semantic" edge="1" parent="1" source="fab_notebook" style="endArrow=block;html=1;strokeColor=#8E44AD;fontColor=#4A235A;" target="fab_semantic" value="foundryagent_fact">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_lake_kql" edge="1" parent="1" source="fab_lakehouse" style="endArrow=block;html=1;strokeColor=#8E44AD;" target="fab_kql" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_semantic_report" edge="1" parent="1" source="fab_semantic" style="endArrow=block;html=1;strokeColor=#8E44AD;" target="fab_report" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_bicep_deploy" edge="1" parent="1" source="iac_bicep" style="endArrow=block;html=1;dashed=1;strokeColor=#7F7F7F;fontColor=#404040;" target="lane_app" value="deploys">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_scripts_fabric" edge="1" parent="1" source="iac_scripts" style="endArrow=block;html=1;dashed=1;strokeColor=#7F7F7F;fontColor=#404040;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="lane_fabric" value="provisions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="smtrjSy5xOankX5m-ifu" name="cfs eval">
+    <mxGraphModel dx="648" dy="317" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="OG2eBY7n1PEqQCU040Lk-6" edge="1" parent="1" source="OG2eBY7n1PEqQCU040Lk-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="OG2eBY7n1PEqQCU040Lk-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OG2eBY7n1PEqQCU040Lk-10" edge="1" parent="1" source="OG2eBY7n1PEqQCU040Lk-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="OG2eBY7n1PEqQCU040Lk-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OG2eBY7n1PEqQCU040Lk-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E75B6;fontColor=#1F3864;" value="&lt;b&gt;Web UI&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Search by Date \ User&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;conv&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt; &lt;/span&gt;0&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;conv&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt; &lt;/span&gt;1 - date - title - summary | &lt;b&gt;View&lt;/b&gt;&lt;br&gt;json 1&lt;br&gt;json 2&lt;br&gt;json 3&lt;br&gt;json 4&lt;br&gt;&lt;br&gt;&lt;span style=&quot;color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230)); background-color: transparent;&quot;&gt;conv&lt;/span&gt;&lt;span style=&quot;color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230)); background-color: transparent;&quot;&gt;&amp;nbsp;2&lt;/span&gt;&amp;nbsp;- date - title - summary | &lt;b&gt;View&lt;/b&gt;&lt;b&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="190" width="230" x="250" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="OG2eBY7n1PEqQCU040Lk-5" edge="1" parent="1" source="OG2eBY7n1PEqQCU040Lk-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="OG2eBY7n1PEqQCU040Lk-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OG2eBY7n1PEqQCU040Lk-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E75B6;fontColor=#1F3864;" value="Detail View&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Raw&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" vertex="1">
+          <mxGeometry height="135" width="160" x="555" y="147.5" as="geometry" />
+        </mxCell>
+        <mxCell id="OG2eBY7n1PEqQCU040Lk-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E75B6;fontColor=#1F3864;" value="&lt;div&gt;&lt;b&gt;Storage Blob&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;Raw Conv&lt;div&gt;id = conv 1&amp;nbsp;&lt;/div&gt;&lt;div&gt;id = conv 2&amp;nbsp;&lt;/div&gt;&lt;div&gt;id = conv 3&amp;nbsp;&lt;/div&gt;&lt;div&gt;id = conv 4&amp;nbsp;&lt;/div&gt;&lt;div&gt;id = conv 5&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="170" x="550" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="OG2eBY7n1PEqQCU040Lk-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E75B6;fontColor=#1F3864;" value="&lt;b&gt;SQL&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;table 1 (conv list)&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;conv&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt; &lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;1&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt; &lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;| date | summary | Titlte | blob path&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;conv&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;&amp;nbsp;2&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;| date | summary | Titlte&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt; &lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;| blob path&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;conv&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;&amp;nbsp;3&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;| date | summary | Titlte&lt;/span&gt; | blob path&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230)); background-color: transparent;&quot;&gt;conv&lt;/span&gt;&lt;span style=&quot;color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230)); background-color: transparent;&quot;&gt;&amp;nbsp;4&lt;/span&gt;&lt;span style=&quot;color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230)); background-color: transparent;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230)); background-color: transparent;&quot;&gt;| date | summary | Titlte&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt; &lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(31, 56, 100), rgb(171, 192, 230));&quot;&gt;| blob path&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;table 2 (transformed, subset)&lt;/b&gt;&lt;/div&gt;&lt;div&gt;extracted&lt;/div&gt;&lt;div&gt;input to eval&amp;nbsp;&lt;/div&gt;&lt;div&gt;kpi&lt;/div&gt;" vertex="1">
+          <mxGeometry height="190" width="230" x="250" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="OG2eBY7n1PEqQCU040Lk-9" edge="1" parent="1" source="OG2eBY7n1PEqQCU040Lk-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="OG2eBY7n1PEqQCU040Lk-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OG2eBY7n1PEqQCU040Lk-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E75B6;fontColor=#1F3864;" value="Python Fast API" vertex="1">
+          <mxGeometry height="60" width="140" x="295" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="OG2eBY7n1PEqQCU040Lk-8" edge="1" parent="1" source="OG2eBY7n1PEqQCU040Lk-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.234;entryY=0.018;entryDx=0;entryDy=0;entryPerimeter=0;" target="OG2eBY7n1PEqQCU040Lk-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,14 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+    "encoding": {
+        "y": { "field": "Agent", "type": "nominal", "title": null, "sort": "-x" },
+        "x": { "field": "TotalTokens", "type": "quantitative", "title": "Total Tokens" }
+    },
+    "layer": [
+        { "mark": { "type": "bar", "cornerRadiusEnd": 3 } },
+        {
+            "mark": { "type": "text", "style": "labelHorizontal" },
+            "encoding": { "text": { "field": "TotalTokens", "type": "quantitative" } }
+        }
+    ]
+}

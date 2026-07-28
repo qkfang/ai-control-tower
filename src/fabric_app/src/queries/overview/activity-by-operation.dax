@@ -1,0 +1,7 @@
+EVALUATE
+SUMMARIZECOLUMNS(
+    foundryagent_fact[operation_name],
+    {{FILTERS_PREFIX}}"Invocations", [Total Invocations],
+    "Tokens", [Total Tokens]
+)
+ORDER BY [Invocations] DESC
