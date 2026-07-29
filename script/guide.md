@@ -73,7 +73,29 @@ cd script
 
 ---
 
-## 4. Migrate data in Fabric
+## 4. `04_deploy_rayfin.ps1` — deploy the Fabric app
+
+Deploys the Rayfin app in `src/fabric_app` to the Fabric workspace and verifies the deployment status.
+
+**Prerequisites:**
+- Install Node.js and npm.
+- Ensure your account has permission to create and update items in the target Fabric workspace.
+
+**Edit the inline variable at the top of the script:**
+- `$workspaceName` — target Fabric workspace name (default `AI_Control_Tower_dev`)
+
+The script restores npm packages, signs in to Rayfin, builds and deploys the app, and checks endpoint health.
+
+Run:
+
+```powershell
+cd script
+.\04_deploy_rayfin.ps1
+```
+
+---
+
+## 5. Migrate data in Fabric
 
 - Go to Foundry or Test Webapp to generate some agent activities. 
 
