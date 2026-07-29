@@ -1,5 +1,5 @@
-id: AI_ControlTower_App
-name: AI_ControlTower_App
+id: AI_Control_Tower_App
+name: AI_Control_Tower_App
 version: 1.0.0
 services:
   auth:
@@ -9,6 +9,7 @@ services:
     allowedRedirectUris:
       - http://localhost:5173
       - https://clear-gale-023ccca355-australiaeast.webapp.fabricapps.net
+      - https://light-gorge-7e40038f42-australiaeast.webapp.fabricapps.net
   data:
     enabled: false
   storage:

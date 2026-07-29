@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
     "type": "KQLQueryset",
-    "displayName": "Log_Analytics_KustoQueryWorkbench",
+    "displayName": "AI_Control_Tower_KQL_LAW",
     "description": "KQL queries for monitoring and exploration"
   },
   "config": {

@@ -67,7 +67,7 @@
         <mxCell id="fab_semantic" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5EEF8;strokeColor=#8E44AD;fontColor=#4A235A;" value="Semantic Model" vertex="1">
           <mxGeometry height="80" width="209" x="1668" y="530" as="geometry" />
         </mxCell>
-        <mxCell id="fab_report" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5EEF8;strokeColor=#8E44AD;fontColor=#4A235A;fontStyle=1;" value="Power BI Report&#xa;AI_ControlTower_Report" vertex="1">
+        <mxCell id="fab_report" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5EEF8;strokeColor=#8E44AD;fontColor=#4A235A;fontStyle=1;" value="Power BI Report&#xa;AI_Control_Tower_Report" vertex="1">
           <mxGeometry height="70" width="208" x="1668" y="636" as="geometry" />
         </mxCell>
         <mxCell id="lane_iac" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDEDED;strokeColor=#B7B7B7;verticalAlign=top;fontStyle=1;fontColor=#404040;" value="Infrastructure as Code &amp; Deployment" vertex="1">
