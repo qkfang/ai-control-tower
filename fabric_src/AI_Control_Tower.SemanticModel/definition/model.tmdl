@@ -21,14 +21,35 @@ model Model
 		measure 'Total Invocations' = COUNTROWS(foundryagent_fact)
 			formatString: #,##0
 			lineageTag: 00000000-0000-0000-0000-000000000003
+
+		measure 'Active Agents' = DISTINCTCOUNT(foundryagent_fact[agent_id])
+			formatString: #,##0
 		
 		measure 'Total Tokens' = SUM(foundryagent_fact[total_tokens])
 			formatString: #,##0
 			lineageTag: 00000000-0000-0000-0000-000000000004
+
+		measure 'Input Tokens' = SUM(foundryagent_fact[input_tokens])
+			formatString: #,##0
+
+		measure 'Output Tokens' = SUM(foundryagent_fact[output_tokens])
+			formatString: #,##0
+
+		measure 'Avg Tokens per Invocation' = DIVIDE(SUM(foundryagent_fact[total_tokens]), COUNTROWS(foundryagent_fact))
+			formatString: #,##0.00
+
+		measure 'Est. Token Cost (USD)' = DIVIDE(SUM(foundryagent_fact[input_tokens]) * 2.5 + SUM(foundryagent_fact[output_tokens]) * 10, 1000000)
+			formatString: $#,##0.0000
 		
 		measure 'Avg Duration (ms)' = AVERAGE(foundryagent_fact[duration_ms])
 			formatString: #,##0.00
 			lineageTag: 00000000-0000-0000-0000-000000000005
+
+		measure 'Failed Invocations' = COUNTROWS(FILTER(foundryagent_fact, foundryagent_fact[success] = FALSE()))
+			formatString: #,##0
+
+		measure 'Success Rate' = DIVIDE(COUNTROWS(FILTER(foundryagent_fact, foundryagent_fact[success] = TRUE())), COUNTROWS(foundryagent_fact)) * 100
+			formatString: 0.00
 		
 		measure 'Success Rate %' = DIVIDE(COUNTROWS(FILTER(foundryagent_fact, foundryagent_fact[success] = TRUE())), COUNTROWS(foundryagent_fact)) * 100
 			formatString: 0.00%
