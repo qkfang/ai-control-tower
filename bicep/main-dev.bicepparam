@@ -11,3 +11,5 @@ param principals = [
 param deployAppServicePlan = true
 param deployWebApp = true
 param deployFoundry = true
+param storageSecurityControl = 'Ignore'
+param storagePublicNetworkAccess = 'Enabled'

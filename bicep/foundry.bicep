@@ -60,28 +60,6 @@ resource foundryAppInsightsConnection 'Microsoft.CognitiveServices/accounts/conn
   }
 }
 
-resource projectAppInsightsConnection 'Microsoft.CognitiveServices/accounts/projects/connections@2025-06-01' = if (!empty(appInsightsId)) {
-  parent: aiProject
-  name: appInsightsConnectionName
-  properties: {
-    authType: 'ApiKey'
-    category: 'AppInsights'
-    target: appInsightsId
-    credentials: {
-      key: appInsightsConnectionString
-    }
-    useWorkspaceManagedIdentity: false
-    isSharedToAll: false
-    sharedUserList: []
-    peRequirement: 'NotRequired'
-    peStatus: 'NotApplicable'
-    metadata: {
-      ApiType: 'Azure'
-      ResourceId: appInsightsId
-    }
-  }
-}
-
 resource gpt4oDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
   parent: aiHub
   name: 'gpt-4o'

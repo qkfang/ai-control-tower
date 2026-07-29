@@ -24,6 +24,16 @@ param deployWebApp bool = true
 @description('Deploy the AI Foundry account')
 param deployFoundry bool = true
 
+@description('Security control tag value for the Storage Account')
+param storageSecurityControl string = 'Ignore'
+
+@description('Public network access for the Storage Account')
+@allowed([
+  'Enabled'
+  'Disabled'
+])
+param storagePublicNetworkAccess string = 'Enabled'
+
 var commonTags = {
   environment: environment
 }
@@ -62,7 +72,9 @@ var fabricCapacityName = replace('${baseName}fabric${environment}', '-', '')
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: storageAccountName
   location: location
-  tags: commonTags
+  tags: union(commonTags, {
+    SecurityControl: storageSecurityControl
+  })
   sku: {
     name: 'Standard_LRS'
   }
@@ -73,7 +85,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
     supportsHttpsTrafficOnly: true
     minimumTlsVersion: 'TLS1_2'
     allowBlobPublicAccess: true // poc only
-    publicNetworkAccess: 'Enabled' // poc only
+    publicNetworkAccess: storagePublicNetworkAccess
     networkAcls: {
       bypass: 'AzureServices'
       defaultAction: 'Allow'
