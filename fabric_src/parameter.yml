@@ -19,6 +19,16 @@ find_replace:
           _ALL_: "$workspace.$id"
       item_type: "Notebook"
 
+    - find_value: "c1db55df-9f00-4362-8909-4b0f6a951b50"
+      replace_value:
+          _ALL_: "$items.Notebook.FoundryAgent_FactTable_ETL.$id"
+      item_type: "DataPipeline"
+
+    - find_value: "5662e90c-c128-4d18-a1b9-9fe24a816fbd"
+      replace_value:
+          _ALL_: "$workspace.$id"
+      item_type: "DataPipeline"
+
     # Placeholder SQL endpoint hostname inside the Direct Lake semantic model
     # expression. Resolved at deploy time to the target lakehouse's SQL endpoint
     # (e.g. <id>.datawarehouse.fabric.microsoft.com).

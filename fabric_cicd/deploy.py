@@ -42,6 +42,7 @@ if _env_overlay.exists():
 ITEM_TYPES_IN_SCOPE = [
     "Lakehouse",
     "Notebook",
+    "DataPipeline",
     "KQLQueryset",
     "KQLDashboard",
     "SemanticModel",
