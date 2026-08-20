@@ -22,6 +22,16 @@ find_replace:
           _ALL_: "$workspace.$id"
       item_type: "Notebook"
 
+    - find_value: "c1db55df-9f00-4362-8909-4b0f6a951b50"
+      replace_value:
+          _ALL_: "$items.Notebook.FoundryAgent_FactTable_ETL.$id"
+      item_type: "DataPipeline"
+
+    - find_value: "5662e90c-c128-4d18-a1b9-9fe24a816fbd"
+      replace_value:
+          _ALL_: "$workspace.$id"
+      item_type: "DataPipeline"
+
     # Placeholder SQL endpoint hostname inside the Direct Lake semantic model
     # expression. Resolved at deploy time to the target lakehouse's SQL endpoint
     # (e.g. <id>.datawarehouse.fabric.microsoft.com).
@@ -30,47 +40,38 @@ find_replace:
           _ALL_: "$items.Lakehouse.AI_Foundry_Control_Tower.$sqlendpoint"
       item_type: "SemanticModel"
 
-    # Source workspace display name baked into the OneLake abfss URI.
-    # Replace with the target workspace display name. Pulled from the
-    # FABRIC_WORKSPACE_NAME environment variable (fabric-cicd v1.0.0 does not
-    # support the $workspace.$name dynamic variable).
-    - find_value: "AI_Control_Tower_v2"
-      replace_value:
-          _ALL_: "$ENV:FABRIC_WORKSPACE_NAME"
-      item_type: "Notebook"
-
     # Azure resource group name baked into Log Analytics / App Insights resource
-    # IDs across notebook, KQL queryset and KQL dashboard files. Pulled from
+    # IDs across the KQL queryset and KQL dashboard files. Pulled from
     # the FABRIC_RESOURCE_GROUP environment variable via fabric-cicd's
     # enable_environment_variable_replacement feature flag.
     - find_value: "rg-aictt-dev"
       replace_value:
           _ALL_: "$ENV:FABRIC_RESOURCE_GROUP"
-      item_type: ["Notebook", "KQLQueryset", "KQLDashboard"]
+      item_type: ["KQLQueryset", "KQLDashboard"]
 
     # Azure subscription ID baked into Log Analytics / App Insights resource
-    # IDs across notebook, KQL queryset and KQL dashboard files. Pulled from
+    # IDs across the KQL queryset and KQL dashboard files. Pulled from
     # the FABRIC_SUBSCRIPTION_ID environment variable.
     - find_value: "873a4995-e21b-47e2-953e-f2e88e2fa4f9"
       replace_value:
           _ALL_: "$ENV:FABRIC_SUBSCRIPTION_ID"
-      item_type: ["Notebook", "KQLQueryset", "KQLDashboard"]
+      item_type: ["KQLQueryset", "KQLDashboard"]
 
-    # Log Analytics workspace name baked into resource IDs across notebook,
-    # KQL queryset and KQL dashboard files. Pulled from the FABRIC_LAW_NAME
+    # Log Analytics workspace name baked into resource IDs across the KQL
+    # queryset and KQL dashboard files. Pulled from the FABRIC_LAW_NAME
     # environment variable.
     - find_value: "aictt-law-dev"
       replace_value:
           _ALL_: "$ENV:FABRIC_LAW_NAME"
-      item_type: ["Notebook", "KQLQueryset", "KQLDashboard"]
+      item_type: ["KQLQueryset", "KQLDashboard"]
 
-    # Application Insights component name baked into resource IDs across
-    # notebook, KQL queryset and KQL dashboard files. Pulled from the
+    # Application Insights component name baked into resource IDs across the
+    # KQL queryset and KQL dashboard files. Pulled from the
     # FABRIC_AI_NAME environment variable.
     - find_value: "aictt-ai-dev"
       replace_value:
           _ALL_: "$ENV:FABRIC_AI_NAME"
-      item_type: ["Notebook", "KQLQueryset", "KQLDashboard"]
+      item_type: ["KQLQueryset", "KQLDashboard"]
 
     # ADLS Gen2 storage account name baked into the Lakehouse shortcuts
     # (shortcuts.metadata.json) as https://<account>.dfs.core.windows.net.
