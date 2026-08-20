@@ -1,3 +1,6 @@
+# Reference sample only. The live file fabric-cicd reads is fabric_src/parameter.yml,
+# resolved from the repository_directory passed to FabricWorkspace in deploy.py.
+#
 # parameter.yml for fabric-cicd
 # https://microsoft.github.io/fabric-cicd/latest/how_to/parameterization/
 #
