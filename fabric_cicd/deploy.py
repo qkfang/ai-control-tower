@@ -11,10 +11,15 @@ Optional environment variables:
     FABRIC_DEBUG             - set to "true" for DEBUG logging.
     FABRIC_UNPUBLISH_ORPHANS - set to "true" to remove items in the target
                                workspace that no longer exist in the repo.
+    FABRIC_RUN_PIPELINE      - display name of a DataPipeline to run once the
+                               deployment finishes (e.g. AI_Control_Tower_Pipeline).
+    FABRIC_RUN_PIPELINE_WAIT - seconds to wait for that run to finish before
+                               returning (default 0 = trigger and exit).
 """
 
 import os
 import sys
+import time
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -61,6 +66,47 @@ PARAMETERIZED_ENV_VARS = [
     "FABRIC_STORAGE_ACCOUNT",
     "FABRIC_ADLS_CONNECTION_ID",
 ]
+
+# Terminal states returned by GET on a Fabric job instance.
+JOB_TERMINAL_STATES = ("Completed", "Failed", "Cancelled", "Deduped")
+
+
+def run_pipeline(workspace: FabricWorkspace, pipeline_name: str, wait_seconds: int) -> int:
+    """Trigger an on-demand run of a deployed DataPipeline. Returns a process exit code."""
+    # Repopulates workspace_items with the ids assigned during publish.
+    workspace._refresh_deployed_items()
+    pipeline = workspace.workspace_items.get("DataPipeline", {}).get(pipeline_name)
+    if not pipeline:
+        print(f"ERROR: DataPipeline '{pipeline_name}' not found in the target workspace.")
+        return 1
+
+    response = workspace.endpoint.invoke(
+        method="POST",
+        url=f"{workspace.base_api_url}/items/{pipeline['id']}/jobs/instances?jobType=Pipeline",
+        # invoke() defaults body to the string "{}", which the job API rejects.
+        body={},
+        poll_long_running=False,
+    )
+    job_url = response["header"].get("Location")
+    print(f"Triggered pipeline '{pipeline_name}' ({pipeline['id']}).")
+
+    if wait_seconds <= 0 or not job_url:
+        return 0
+
+    deadline = time.time() + wait_seconds
+    while time.time() < deadline:
+        job = workspace.endpoint.invoke(method="GET", url=job_url, body=None, poll_long_running=False)
+        status = job["body"].get("status")
+        if status in JOB_TERMINAL_STATES:
+            print(f"Pipeline run finished with status: {status}")
+            if status != "Completed":
+                print(job["body"].get("failureReason", ""))
+                return 1
+            return 0
+        time.sleep(15)
+
+    print(f"WARNING: pipeline did not finish within {wait_seconds}s; it keeps running in Fabric.")
+    return 0
 
 
 def main() -> int:
@@ -109,6 +155,12 @@ def main() -> int:
         unpublish_all_orphan_items(target_workspace)
 
     print("Deployment complete.")
+
+    pipeline_name = os.environ.get("FABRIC_RUN_PIPELINE", "").strip()
+    if pipeline_name:
+        wait_seconds = int(os.environ.get("FABRIC_RUN_PIPELINE_WAIT", "0"))
+        return run_pipeline(target_workspace, pipeline_name, wait_seconds)
+
     return 0
 
 
