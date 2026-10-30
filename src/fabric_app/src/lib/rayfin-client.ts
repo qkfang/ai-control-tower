@@ -6,13 +6,14 @@
 //-----------------------------------------------------------------------
 
 import { RayfinClient } from "@microsoft/rayfin-client";
+import type { KillSwitchFunctions } from "./kill-switch";
 
-let _client: RayfinClient | undefined;
+let _client: RayfinClient<Record<string, any>, KillSwitchFunctions> | undefined;
 
 /**
  * Returns the pre-configured RayfinClient singleton.
  */
-export function getRayfinClient(): RayfinClient {
+export function getRayfinClient(): RayfinClient<Record<string, any>, KillSwitchFunctions> {
     if (!_client) {
         const apiUrl = import.meta.env.VITE_RAYFIN_API_URL;
         const publishableKey = import.meta.env.VITE_RAYFIN_PUBLISHABLE_KEY;
@@ -21,11 +22,12 @@ export function getRayfinClient(): RayfinClient {
             throw new Error(`Missing required env vars for creating rayfin client - run 'npx rayfin up'`);
         }
 
-        _client = new RayfinClient({
+        _client = new RayfinClient<Record<string, any>, KillSwitchFunctions>({
             baseUrl: apiUrl,
             publishableKey,
             authStorage: true,
             useProxy: false,
+            functionsBaseUrl: import.meta.env.VITE_RAYFIN_FUNCTIONS_URL,
         });
     }
 

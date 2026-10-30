@@ -1,0 +1,3 @@
+fabric-user-data-functions
+azure-identity
+requests

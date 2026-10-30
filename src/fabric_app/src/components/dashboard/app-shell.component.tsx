@@ -6,15 +6,16 @@
 //-----------------------------------------------------------------------
 
 import { useState, type ComponentType } from "react";
-import { Boxes, Brain, Coins, LayoutDashboard, Moon, Radar, Sun } from "lucide-react";
+import { Boxes, Brain, Coins, LayoutDashboard, Moon, Power, Radar, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useThemeContext } from "@/hooks/theme.context";
 import { FilterBar } from "./filter-bar.component";
 import { CommandCentreView } from "./command-centre.view";
 import { AiEstateView } from "./ai-estate.view";
 import { TokenEconomicsView } from "./token-economics.view";
+import { KillSwitchView } from "./kill-switch.view";
 
-type ViewId = "command" | "estate" | "tokens";
+type ViewId = "command" | "estate" | "tokens" | "kill";
 
 interface NavItem {
     id: ViewId;
@@ -27,6 +28,7 @@ const NAV: NavItem[] = [
     { id: "command", label: "Command Centre", icon: LayoutDashboard, view: CommandCentreView },
     { id: "estate", label: "AI Estate", icon: Boxes, view: AiEstateView },
     { id: "tokens", label: "Token Economics", icon: Coins, view: TokenEconomicsView },
+    { id: "kill", label: "Kill Switch", icon: Power, view: KillSwitchView },
 ];
 
 /** Root layout: brand rail, top bar with theme toggle, and the active view. */
