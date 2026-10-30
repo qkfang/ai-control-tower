@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "UserDataFunction",
+    "displayName": "AI_Control_Tower_KillSwitch",
+    "description": "Blocks an agent through the Agent 365 API"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a86166d5-38e3-48cc-94db-a9dce688d68b"
+  }
+}
