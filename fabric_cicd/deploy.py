@@ -52,6 +52,7 @@ ITEM_TYPES_IN_SCOPE = [
     "KQLDashboard",
     "SemanticModel",
     "Report",
+    "UserDataFunction",
 ]
 
 # Env vars referenced from parameter.yml as $ENV:NAME. fabric-cicd v1.0.0 only
