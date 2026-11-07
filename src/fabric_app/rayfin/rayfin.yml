@@ -8,8 +8,7 @@ services:
       enabled: true
     allowedRedirectUris:
       - http://localhost:5173
-      - https://clear-gale-023ccca355-australiaeast.webapp.fabricapps.net
-      - https://light-gorge-7e40038f42-australiaeast.webapp.fabricapps.net
+      - http://127.0.0.1:5173
   data:
     enabled: false
   storage:
@@ -19,5 +18,14 @@ services:
     folder: dist
     buildCommand: npm run build:fabric
     indexDocument: index.html
+    assetAccess: protected
   functions:
-    enabled: false
+    enabled: true
+    buildCommand: npm run build
+    auth:
+      type: application
+secrets:
+  - name: FABRIC_DATA_AGENT_WORKSPACE_ID
+    description: Workspace containing the published data agent, used only by the server.
+  - name: FABRIC_DATA_AGENT_ID
+    description: Published data agent queried by the chat function.

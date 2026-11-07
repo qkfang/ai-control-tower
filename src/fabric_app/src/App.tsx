@@ -7,11 +7,14 @@
 
 import { AppShell } from "./components/dashboard/app-shell.component";
 import { FiltersProvider } from "./hooks/use-filters";
+import { DataChatProvider } from "./hooks/use-data-chat";
 
 function App() {
     return (
         <FiltersProvider>
-            <AppShell />
+            <DataChatProvider>
+                <AppShell />
+            </DataChatProvider>
         </FiltersProvider>
     );
 }

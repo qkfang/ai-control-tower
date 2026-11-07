@@ -1,4 +1,4 @@
-"""Deploy items in ../fabric_cicd to a target Microsoft Fabric workspace.
+"""Deploy items in ../fabric_src to a target Microsoft Fabric workspace.
 
 Follows the fabric-cicd library usage:
     https://microsoft.github.io/fabric-cicd/latest/
@@ -15,14 +15,19 @@ Optional environment variables:
                                deployment finishes (e.g. AI_Control_Tower_Pipeline).
     FABRIC_RUN_PIPELINE_WAIT - seconds to wait for that run to finish before
                                returning (default 0 = trigger and exit).
+
+Writes ignored src/fabric_app/.fabric-bindings.json for script/04_deploy_rayfin.ps1.
+The checked-in DataAgent includes its published stage and uses the deployed model.
 """
 
+import json
 import os
+import re
 import sys
 import time
 from pathlib import Path
 
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 from azure.identity import AzureCliCredential
 from fabric_cicd import (
     FabricWorkspace,
@@ -32,18 +37,16 @@ from fabric_cicd import (
     unpublish_all_orphan_items,
 )
 
-# Load base .env, then overlay .env.<environment> (lowercased) if present.
-# The per-environment file takes precedence so the same parameter.yml can be
-# reused across DEV / PPE / PROD by only swapping .env files.
+# Environment-specific files override the base file, not explicit process settings.
 _env_dir = Path(__file__).resolve().parent
-load_dotenv(_env_dir / ".env")
-_env_name = os.environ.get("FABRIC_ENVIRONMENT", "DEV").lower()
+_env_base = dotenv_values(_env_dir / ".env")
+_env_name = (os.environ.get("FABRIC_ENVIRONMENT") or _env_base.get("FABRIC_ENVIRONMENT") or "DEV").lower()
 _env_overlay = _env_dir / f".env.{_env_name}"
-if _env_overlay.exists():
-    load_dotenv(_env_overlay, override=True)
-    print(f"loaded overlay: {_env_overlay.name}")
+for _name, _value in {**_env_base, **dotenv_values(_env_overlay)}.items():
+    if _value is not None:
+        os.environ.setdefault(_name, _value)
 
-# Item types present under ../fabric_cicd
+# Item types present under ../fabric_src
 ITEM_TYPES_IN_SCOPE = [
     "Lakehouse",
     "Notebook",
@@ -53,7 +56,10 @@ ITEM_TYPES_IN_SCOPE = [
     "SemanticModel",
     "Report",
     "UserDataFunction",
+    "DataAgent",
 ]
+
+APP_BINDINGS_PATH = _env_dir.parent / "src" / "fabric_app" / ".fabric-bindings.json"
 
 # Env vars referenced from parameter.yml as $ENV:NAME. fabric-cicd v1.0.0 only
 # picks up OS env vars whose names literally start with "$ENV:", so deploy.py
@@ -70,6 +76,23 @@ PARAMETERIZED_ENV_VARS = [
 
 # Terminal states returned by GET on a Fabric job instance.
 JOB_TERMINAL_STATES = ("Completed", "Failed", "Cancelled", "Deduped")
+
+
+def write_app_bindings(workspace: FabricWorkspace, workspace_id: str) -> None:
+    workspace._refresh_deployed_items()
+    model = workspace.workspace_items.get("SemanticModel", {}).get("AI_Control_Tower")
+    agent = workspace.workspace_items.get("DataAgent", {}).get("Data_Chat_Agent")
+    if not model or not agent:
+        raise RuntimeError("The deployed semantic model and data agent are required for app configuration.")
+    APP_BINDINGS_PATH.write_text(
+        json.dumps({
+            "workspaceId": workspace_id,
+            "semanticModelId": model["id"],
+            "dataAgentId": agent["id"],
+        }, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print("App bindings saved locally. Next: script/04_deploy_rayfin.ps1.")
 
 
 def run_pipeline(workspace: FabricWorkspace, pipeline_name: str, wait_seconds: int) -> int:
@@ -150,11 +173,17 @@ def main() -> int:
         token_credential=AzureCliCredential(),
     )
 
+    APP_BINDINGS_PATH.unlink(missing_ok=True)
     publish_all_items(target_workspace)
 
     if os.environ.get("FABRIC_UNPUBLISH_ORPHANS", "false").lower() == "true":
-        unpublish_all_orphan_items(target_workspace)
+        # Adding DataAgent to the deployment must not delete manually managed agents.
+        target_workspace._refresh_deployed_items()
+        agent_names = target_workspace.workspace_items.get("DataAgent", {})
+        exclude_agents = "|".join(f"^{re.escape(name)}$" for name in agent_names) or "^$"
+        unpublish_all_orphan_items(target_workspace, item_name_exclude_regex=exclude_agents)
 
+    write_app_bindings(target_workspace, workspace_id)
     print("Deployment complete.")
 
     pipeline_name = os.environ.get("FABRIC_RUN_PIPELINE", "").strip()

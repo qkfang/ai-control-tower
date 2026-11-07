@@ -6,14 +6,18 @@
 //-----------------------------------------------------------------------
 
 import { RayfinClient } from "@microsoft/rayfin-client";
+import { resolveRayfinFunctionsBaseUrl } from "@microsoft/rayfin-local-dev";
 import type { KillSwitchFunctions } from "./kill-switch";
+import type { AppFunctionsSchema } from "../../rayfin/functions/src/types";
 
-let _client: RayfinClient<Record<string, any>, KillSwitchFunctions> | undefined;
+type AppFunctions = KillSwitchFunctions & AppFunctionsSchema;
+
+let _client: RayfinClient<Record<string, never>, AppFunctions> | undefined;
 
 /**
  * Returns the pre-configured RayfinClient singleton.
  */
-export function getRayfinClient(): RayfinClient<Record<string, any>, KillSwitchFunctions> {
+export function getRayfinClient(): RayfinClient<Record<string, never>, AppFunctions> {
     if (!_client) {
         const apiUrl = import.meta.env.VITE_RAYFIN_API_URL;
         const publishableKey = import.meta.env.VITE_RAYFIN_PUBLISHABLE_KEY;
@@ -22,12 +26,12 @@ export function getRayfinClient(): RayfinClient<Record<string, any>, KillSwitchF
             throw new Error(`Missing required env vars for creating rayfin client - run 'npx rayfin up'`);
         }
 
-        _client = new RayfinClient<Record<string, any>, KillSwitchFunctions>({
+        _client = new RayfinClient<Record<string, never>, AppFunctions>({
             baseUrl: apiUrl,
             publishableKey,
             authStorage: true,
             useProxy: false,
-            functionsBaseUrl: import.meta.env.VITE_RAYFIN_FUNCTIONS_URL,
+            functionsBaseUrl: resolveRayfinFunctionsBaseUrl(),
         });
     }
 

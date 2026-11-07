@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------
 
 import { useState, type ComponentType } from "react";
-import { Boxes, Brain, Coins, LayoutDashboard, Moon, Power, Radar, Sun } from "lucide-react";
+import { Boxes, Brain, Coins, LayoutDashboard, MessageSquare, Moon, Power, Radar, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useThemeContext } from "@/hooks/theme.context";
 import { FilterBar } from "./filter-bar.component";
@@ -14,8 +14,9 @@ import { CommandCentreView } from "./command-centre.view";
 import { AiEstateView } from "./ai-estate.view";
 import { TokenEconomicsView } from "./token-economics.view";
 import { KillSwitchView } from "./kill-switch.view";
+import { DataChatView } from "./data-chat.view";
 
-type ViewId = "command" | "estate" | "tokens" | "kill";
+type ViewId = "command" | "estate" | "tokens" | "kill" | "chat";
 
 interface NavItem {
     id: ViewId;
@@ -29,6 +30,7 @@ const NAV: NavItem[] = [
     { id: "estate", label: "AI Estate", icon: Boxes, view: AiEstateView },
     { id: "tokens", label: "Token Economics", icon: Coins, view: TokenEconomicsView },
     { id: "kill", label: "Kill Switch", icon: Power, view: KillSwitchView },
+    { id: "chat", label: "Chat with data", icon: MessageSquare, view: DataChatView },
 ];
 
 /** Root layout: brand rail, top bar with theme toggle, and the active view. */
@@ -94,7 +96,7 @@ export function AppShell() {
                             {isDark ? <Sun className="icon-size-200" /> : <Moon className="icon-size-200" />}
                         </button>
                     </header>
-                    <FilterBar />
+                    {active !== "chat" && <FilterBar />}
                 </div>
 
                 {/* Mobile nav */}
