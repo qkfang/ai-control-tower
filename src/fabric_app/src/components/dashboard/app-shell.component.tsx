@@ -6,18 +6,17 @@
 //-----------------------------------------------------------------------
 
 import { useState, type ComponentType } from "react";
-import { Bot, Boxes, Brain, Coins, LayoutDashboard, MessageSquare, Moon, Power, Radar, Sun } from "lucide-react";
+import { Bot, Boxes, Brain, Coins, LayoutDashboard, MessageSquare, Moon, Radar, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useThemeContext } from "@/hooks/theme.context";
 import { FilterBar } from "./filter-bar.component";
 import { CommandCentreView } from "./command-centre.view";
 import { AiEstateView } from "./ai-estate.view";
 import { TokenEconomicsView } from "./token-economics.view";
-import { KillSwitchView } from "./kill-switch.view";
 import { DataChatView } from "./data-chat.view";
 import { FoundryChatView } from "./foundry-chat.view";
 
-type ViewId = "command" | "estate" | "tokens" | "kill" | "chat" | "foundry";
+type ViewId = "command" | "estate" | "tokens" | "chat" | "foundry";
 
 interface NavItem {
     id: ViewId;
@@ -30,7 +29,6 @@ const NAV: NavItem[] = [
     { id: "command", label: "Command Centre", icon: LayoutDashboard, view: CommandCentreView },
     { id: "estate", label: "AI Estate", icon: Boxes, view: AiEstateView },
     { id: "tokens", label: "Token Economics", icon: Coins, view: TokenEconomicsView },
-    { id: "kill", label: "Kill Switch", icon: Power, view: KillSwitchView },
     { id: "chat", label: "Chat with data", icon: MessageSquare, view: DataChatView },
     { id: "foundry", label: "Chat with Foundry agent", icon: Bot, view: FoundryChatView },
 ];

@@ -7,10 +7,9 @@
 
 import { RayfinClient } from "@microsoft/rayfin-client";
 import { resolveRayfinFunctionsBaseUrl } from "@microsoft/rayfin-local-dev";
-import type { KillSwitchFunctions } from "./kill-switch";
 import type { AppFunctionsSchema } from "../../rayfin/functions/src/types";
 
-type AppFunctions = KillSwitchFunctions & AppFunctionsSchema;
+type AppFunctions = AppFunctionsSchema;
 
 let _client: RayfinClient<Record<string, never>, AppFunctions> | undefined;
 

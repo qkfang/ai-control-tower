@@ -8,7 +8,7 @@ export interface FoundryAgent {
 
 export async function listFoundryAgents(): Promise<FoundryAgent[]> {
     try {
-        const result = await getRayfinClient().functions.list_foundry_agents.invoke({}, { timeoutMs: 60000 });
+        const result = await getRayfinClient().functions.list_foundry_agents.invoke(undefined, { timeoutMs: 60000 });
         return Array.isArray(result?.agents) ? result.agents : [];
     } catch {
         throw new DataChatError("Foundry agents could not be loaded. Check the app's Foundry project configuration.");
