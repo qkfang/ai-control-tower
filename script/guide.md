@@ -78,13 +78,16 @@ cd script
 Deploys the Rayfin app in `src/fabric_app` to the Fabric workspace and verifies the deployment status.
 
 **Prerequisites:**
-- Install Node.js and npm.
+- Install Node.js 20, 22 or 24 and npm (a portable Node 24 is used if the installed version is unsupported).
+- Run step 3 first; it writes `src/fabric_app/.fabric-bindings.json` (workspace, semantic model and data agent IDs).
 - Ensure your account has permission to create and update items in the target Fabric workspace.
 
 **Edit the inline variable at the top of the script:**
-- `$workspaceName` — target Fabric workspace name (default `AI_Control_Tower_dev`)
+- `$foundryProjectEndpoint` — Foundry project endpoint used by the "Chat with Foundry agents" view
 
-The script restores npm packages, signs in to Rayfin, builds and deploys the app, and checks endpoint health.
+The script restores npm packages, signs in to Rayfin, provisions the app, sets the server secrets
+(`FABRIC_DATA_AGENT_WORKSPACE_ID`, `FABRIC_DATA_AGENT_ID`, `FOUNDRY_PROJECT_ENDPOINT`), deploys the
+static site and functions, generates `.env`, and checks deployment status.
 
 Run:
 
@@ -100,3 +103,5 @@ cd script
 - Go to Foundry or Test Webapp to generate some agent activities. 
 
 - Go to your workspace in Fabric and locate ` FoundryAgent_FactTable_ETL` notebook. Open the notebook and click `run all`. Once all cells complete, you can go to Power BI report to view activities.
+
+- To keep the data fresh, add a recurring schedule (for example every 15 minutes) to `AI_Control_Tower_Pipeline` in the Fabric portal. Without it the dashboards only update when the pipeline is run manually.
