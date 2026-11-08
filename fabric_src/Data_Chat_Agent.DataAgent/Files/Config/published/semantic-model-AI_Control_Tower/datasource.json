@@ -1,0 +1,255 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/dataSource/1.0.0/schema.json",
+  "artifactId": "00000000-0000-0000-0000-000000000102",
+  "workspaceId": "00000000-0000-0000-0000-000000000101",
+  "dataSourceInstructions": null,
+  "displayName": "AI_Control_Tower",
+  "type": "semantic_model",
+  "userDescription": "Semantic model for Power BI reporting",
+  "metadata": null,
+  "elements": [
+    {
+      "id": "00000000-0000-0000-0000-000000000002",
+      "is_selected": true,
+      "display_name": "foundryagent_fact",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "00000000-0000-0000-0000-000000000010",
+          "is_selected": true,
+          "display_name": "time_generated",
+          "type": "semantic_model.column",
+          "data_type": "DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000011",
+          "is_selected": true,
+          "display_name": "agent_id",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000012",
+          "is_selected": true,
+          "display_name": "blueprint_id",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000013",
+          "is_selected": true,
+          "display_name": "operation_name",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000014",
+          "is_selected": true,
+          "display_name": "request_model",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000024",
+          "is_selected": true,
+          "display_name": "response_id",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000015",
+          "is_selected": true,
+          "display_name": "duration_ms",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000016",
+          "is_selected": true,
+          "display_name": "success",
+          "type": "semantic_model.column",
+          "data_type": "Boolean",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000017",
+          "is_selected": true,
+          "display_name": "status",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000018",
+          "is_selected": true,
+          "display_name": "input_tokens",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000019",
+          "is_selected": true,
+          "display_name": "output_tokens",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000020",
+          "is_selected": true,
+          "display_name": "total_tokens",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000021",
+          "is_selected": true,
+          "display_name": "date_key",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000022",
+          "is_selected": true,
+          "display_name": "year",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000023",
+          "is_selected": true,
+          "display_name": "month",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000003",
+          "is_selected": true,
+          "display_name": "Total Invocations",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000004",
+          "is_selected": true,
+          "display_name": "Total Tokens",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000005",
+          "is_selected": true,
+          "display_name": "Avg Duration (ms)",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000006",
+          "is_selected": true,
+          "display_name": "Success Rate %",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Active_Agents",
+          "is_selected": true,
+          "display_name": "Active Agents",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Input_Tokens2",
+          "is_selected": true,
+          "display_name": "Input Tokens",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Output_Tokens2",
+          "is_selected": true,
+          "display_name": "Output Tokens",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Avg_Tokens_per_Invocation",
+          "is_selected": true,
+          "display_name": "Avg Tokens per Invocation",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Est__Token_Cost__USD_",
+          "is_selected": true,
+          "display_name": "Est. Token Cost (USD)",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Failed_Invocations",
+          "is_selected": true,
+          "display_name": "Failed Invocations",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "Success_Rate",
+          "is_selected": true,
+          "display_name": "Success Rate",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        }
+      ]
+    }
+  ]
+}

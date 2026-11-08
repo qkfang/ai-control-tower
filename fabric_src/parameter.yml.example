@@ -8,6 +8,17 @@
 # value is used. _ALL_ applies to every environment.
 
 find_replace:
+    # Apply to both draft and published data-agent sources.
+    - find_value: "00000000-0000-0000-0000-000000000101"
+      replace_value:
+          _ALL_: "$workspace.$id"
+      item_type: "DataAgent"
+
+    - find_value: "00000000-0000-0000-0000-000000000102"
+      replace_value:
+          _ALL_: "$items.SemanticModel.AI_Control_Tower.$id"
+      item_type: "DataAgent"
+
     # Source lakehouse GUID embedded in the notebook metadata.
     # Replace with the deployed lakehouse id in the target workspace.
     - find_value: "3169a0db-1de9-41e3-804c-9b0e6aaf505e"
@@ -91,4 +102,3 @@ find_replace:
       replace_value:
           _ALL_: "$ENV:FABRIC_ADLS_CONNECTION_ID"
       item_type: "Lakehouse"
-

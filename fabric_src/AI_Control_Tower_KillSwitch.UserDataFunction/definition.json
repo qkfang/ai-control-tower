@@ -2,10 +2,14 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/userDataFunction/definition/1.1.0/schema.json",
   "runtime": "PYTHON",
   "connectedDataSources": [],
+  "functions": [
+    { "name": "kill_agent", "description": "Blocks the given agent through the Agent 365 API.", "isPublicEndpointEnabled": false }
+  ],
   "libraries": {
     "public": [
-      { "name": "azure-identity" },
-      { "name": "requests" }
+      { "type": "PYPI", "name": "fabric-user-data-functions", "version": "1.0.142" },
+      { "type": "PYPI", "name": "azure-identity", "version": "1.27.0" },
+      { "type": "PYPI", "name": "requests", "version": "2.34.2" }
     ],
     "private": []
   }

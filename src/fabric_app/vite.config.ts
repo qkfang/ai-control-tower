@@ -9,6 +9,7 @@ import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, type PluginOption } from "vite";
 import license from "rollup-plugin-license";
+import { rayfinLocalDev } from "@microsoft/rayfin-local-dev/vite";
 
 import { resolve } from 'path';
 
@@ -47,7 +48,12 @@ export default defineConfig({
         react(),
         tailwindcss(),
         localNetworkAccessPlugin,
+        rayfinLocalDev(),
     ],
+    server: {
+        host: "127.0.0.1",
+        allowedHosts: ["localhost", "127.0.0.1"],
+    },
     resolve: {
         alias: {
             '@': resolve(projectRoot, 'src'),
