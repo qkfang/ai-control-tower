@@ -21,4 +21,12 @@ export type AppFunctionsSchema = {
     input: { question: string; history: string };
     output: { answer: string };
   };
+  list_foundry_agents: {
+    input: Record<string, never>;
+    output: { agents: { name: string; model: string }[] };
+  };
+  chat_with_foundry_agent: {
+    input: { agent: string; question: string; history: string };
+    output: { answer: string };
+  };
 };

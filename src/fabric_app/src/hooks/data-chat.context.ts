@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import type { DataChatMessage } from "@/services/data-chat.service";
 
-interface DataChatContextValue {
+export interface ChatContextValue {
     messages: DataChatMessage[];
     draft: string;
     setDraft: (draft: string) => void;
@@ -14,7 +14,7 @@ interface DataChatContextValue {
     reset: () => void;
 }
 
-export const DataChatContext = createContext<DataChatContextValue | null>(null);
+export const DataChatContext = createContext<ChatContextValue | null>(null);
 
 export function useDataChat() {
     const context = useContext(DataChatContext);

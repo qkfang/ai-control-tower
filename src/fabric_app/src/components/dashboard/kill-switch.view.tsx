@@ -21,7 +21,7 @@ export function KillSwitchView() {
         setBusy(true);
         setMessage("");
         try {
-            const result = await getRayfinClient().functions.kill_agent.invoke({ agent_id: agentId.trim() });
+            const result = await getRayfinClient().functions.kill_agent.invoke({ agentId: agentId.trim() });
             setMessage(`Agent ${result.agentId}: ${result.status}`);
         } catch (e) {
             setMessage(e instanceof Error ? e.message : String(e));

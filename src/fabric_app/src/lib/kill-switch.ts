@@ -14,5 +14,5 @@ export interface KillAgentResult {
 }
 
 export type KillSwitchFunctions = FunctionsSchema & {
-    kill_agent: { input: { agent_id: string }; output: KillAgentResult };
+    kill_agent: { input: { agentId: string }; output: KillAgentResult };
 };

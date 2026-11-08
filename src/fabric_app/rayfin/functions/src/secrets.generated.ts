@@ -24,6 +24,7 @@ declare module '@microsoft/fabric-user-data-functions' {
   interface RayfinSecretRegistry {
     FABRIC_DATA_AGENT_ID: string;
     FABRIC_DATA_AGENT_WORKSPACE_ID: string;
+    FOUNDRY_PROJECT_ENDPOINT: string;
   }
 }
 

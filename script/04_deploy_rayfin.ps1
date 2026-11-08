@@ -4,6 +4,7 @@ $repoRoot      = Split-Path -Parent $PSScriptRoot
 $appRoot       = Join-Path $repoRoot 'src\fabric_app'
 $bindingsPath  = Join-Path $appRoot '.fabric-bindings.json'
 $configPath    = Join-Path $appRoot 'rayfin\rayfin.yml'
+$foundryProjectEndpoint = 'https://aictt-foundry-dev.services.ai.azure.com/api/projects/aictt-foundry-dev-project'
 
 if (-not (Test-Path $bindingsPath)) {
     throw 'Run script\03_deploy_fabric.ps1 successfully before deploying the app.'
@@ -17,7 +18,10 @@ foreach ($key in @('workspaceId', 'semanticModelId', 'dataAgentId')) {
 }
 $nodeMajor = [int](& node -p "process.versions.node.split('.')[0]")
 if ($LASTEXITCODE -ne 0 -or $nodeMajor -notin @(20, 22, 24)) {
-    throw 'Use Node.js 20, 22, or 24 for the Fabric app CLI.'
+    # The Fabric app CLI supports Node.js 20, 22 or 24 only; use a portable Node.js 24.
+    $node24 = (& npm.cmd exec --yes --package=node@24 -- node -p "process.execPath" | Select-Object -Last 1).Trim()
+    if ($LASTEXITCODE -ne 0 -or -not (Test-Path $node24)) { throw 'Could not get Node.js 24 for the Fabric app CLI.' }
+    $env:PATH = "$(Split-Path $node24);$env:PATH"
 }
 $npmCli = Join-Path (Split-Path (Get-Command npm.cmd).Source) 'node_modules\npm\bin\npm-cli.js'
 $configBytes = [System.IO.File]::ReadAllBytes($configPath)
@@ -44,6 +48,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Could not configure the data-agent workspace.' }
     $bindings.dataAgentId | & node $cli secret set FABRIC_DATA_AGENT_ID --stdin
     if ($LASTEXITCODE -ne 0) { throw 'Could not configure the data agent.' }
+    $foundryProjectEndpoint | & node $cli secret set FOUNDRY_PROJECT_ENDPOINT --stdin
+    if ($LASTEXITCODE -ne 0) { throw 'Could not configure the Foundry project.' }
 
     & node $cli up --workspace-id $bindings.workspaceId
     if ($LASTEXITCODE -ne 0) { throw 'App deployment failed.' }

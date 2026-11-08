@@ -41,6 +41,9 @@ resource aiProject 'Microsoft.CognitiveServices/accounts/projects@2025-06-01' = 
 resource foundryAppInsightsConnection 'Microsoft.CognitiveServices/accounts/connections@2025-10-01-preview' = if (!empty(appInsightsId)) {
   parent: aiHub
   name: appInsightsConnectionName
+  dependsOn: [
+    aiProject
+  ]
   properties: {
     authType: 'ApiKey'
     category: 'AppInsights'
@@ -63,6 +66,10 @@ resource foundryAppInsightsConnection 'Microsoft.CognitiveServices/accounts/conn
 resource gpt4oDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
   parent: aiHub
   name: 'gpt-4o'
+  dependsOn: [
+    aiProject
+    foundryAppInsightsConnection
+  ]
   sku: {
     name: 'GlobalStandard'
     capacity: 200

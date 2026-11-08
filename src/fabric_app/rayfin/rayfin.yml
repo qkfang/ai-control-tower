@@ -29,3 +29,5 @@ secrets:
     description: Workspace containing the published data agent, used only by the server.
   - name: FABRIC_DATA_AGENT_ID
     description: Published data agent queried by the chat function.
+  - name: FOUNDRY_PROJECT_ENDPOINT
+    description: Foundry project endpoint hosting the agents, used only by the server.
